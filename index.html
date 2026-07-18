@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="词性">
+<meta name="theme-color" content="#12191c">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<title>词性</title>
+<style>
+:root{
+  --bg:#12191c; --surface:#1d272b; --line:#2b393f;
+  --text:#eceff0; --dim:#7b8b91;
+  --pick:#d9a441; --pick-ink:#12191c;
+  --right:#4fa8a0; --wrong:#c9605a;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#e7ebe8; --surface:#f6f8f6; --line:#ccd4d0;
+    --text:#16201f; --dim:#6d7b78;
+    --pick:#9a6b12; --pick-ink:#fdfaf3;
+    --right:#1f6f68; --wrong:#a63f39;
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  -webkit-user-select:none; user-select:none;
+  overscroll-behavior:none;
+}
+#app{
+  height:100dvh; display:flex; flex-direction:column;
+  padding:calc(env(safe-area-inset-top) + 10px) 14px calc(env(safe-area-inset-bottom) + 12px);
+  max-width:560px; margin:0 auto;
+}
+
+/* ---- status ---- */
+.status{
+  display:flex; justify-content:space-between; align-items:baseline;
+  font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.status b{color:var(--pick);font-weight:600}
+
+/* ---- word ---- */
+.stage{
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:22px; min-height:0;
+}
+.word{
+  font-family:ui-serif,"New York",Georgia,serif;
+  font-size:clamp(2rem,12vw,3.6rem); font-weight:400;
+  letter-spacing:-.02em; line-height:1.05; text-align:center;
+  word-break:break-word; padding:0 4px;
+}
+.say{
+  width:56px;height:56px;border-radius:50%;
+  border:1px solid var(--line); background:var(--surface);
+  color:var(--dim); font-size:20px; line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:none; flex:none;
+}
+.say:active{background:var(--line)}
+.say.dead{color:var(--wrong);border-color:var(--wrong);font-size:11px;letter-spacing:.04em}
+
+/* ---- choices ---- */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+.pos{
+  position:relative;
+  min-height:74px; border-radius:13px;
+  border:1.5px solid var(--line); background:var(--surface);
+  color:var(--text);
+  font-family:ui-serif,"New York",Georgia,serif;
+  font-style:italic; font-size:1.7rem; letter-spacing:.01em;
+}
+.pos:active{background:var(--line)}
+.pos[aria-pressed="true"]{background:var(--pick);border-color:var(--pick);color:var(--pick-ink)}
+/* review states */
+.pos.hit{background:var(--right);border-color:var(--right);color:var(--pick-ink)}
+.pos.miss{background:transparent;border-color:var(--right);border-style:dashed;color:var(--right)}
+.pos.bad{background:transparent;border-color:var(--wrong);color:var(--wrong);text-decoration:line-through;text-decoration-thickness:1.5px}
+.pos.off{opacity:.32}
+.mark{
+  position:absolute; top:7px; right:10px;
+  font-family:-apple-system,system-ui,sans-serif; font-style:normal;
+  font-size:10px; font-weight:600; letter-spacing:.1em;
+}
+
+/* ---- action ---- */
+.act{
+  width:100%; min-height:60px; border-radius:13px; border:none;
+  background:var(--text); color:var(--bg);
+  font-size:1.05rem; font-weight:600; letter-spacing:.16em;
+}
+.act:disabled{background:var(--surface);color:var(--dim);border:1.5px solid var(--line)}
+.act.next{background:var(--wrong);color:#fff}
+
+/* ---- foot ---- */
+.foot{
+  display:flex;justify-content:space-between;
+  font-size:10px;color:var(--dim);margin-top:9px;letter-spacing:.05em;
+}
+.foot span{opacity:.7}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="status">
+    <div>纠缠 <b id="nest">0</b></div>
+    <div>本轮 <b id="seen">0</b>/<span id="total">0</span></div>
+  </div>
+
+  <div class="stage">
+    <div class="word" id="word">…</div>
+    <button class="say" id="say" aria-label="发音">🔊</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <button class="act" id="act" disabled>提交</button>
+
+  <div class="foot">
+    <span id="diag">—</span>
+    <span id="reset" style="text-decoration:underline">重置</span>
+  </div>
+</div>
+
+<script>
+const WORDS = [{"w":"abandon","p":["v"]},{"w":"ability","p":["n"]},{"w":"abolish","p":["v"]},{"w":"absence","p":["n"]},{"w":"absolute","p":["adj"]},{"w":"absorb","p":["v"]},{"w":"abstract","p":["adj","n"]},{"w":"academic","p":["adj"]},{"w":"academy","p":["n"]},{"w":"accelerate","p":["v"]},{"w":"accept","p":["v"]},{"w":"access","p":["n"]},{"w":"accessible","p":["adj"]},{"w":"accident","p":["n"]},{"w":"accommodate","p":["v"]},{"w":"accomplish","p":["v"]},{"w":"accomplishment","p":["n"]},{"w":"accord","p":["n","v"]},{"w":"accordingly","p":["adv"]},{"w":"account","p":["n"]},{"w":"accumulate","p":["v"]},{"w":"accuracy","p":["n"]},{"w":"accurate","p":["adj"]},{"w":"achievement","p":["n"]},{"w":"acknowledge","p":["v"]},{"w":"acquaintance","p":["n"]},{"w":"acquire","p":["v"]},{"w":"activity","p":["n"]},{"w":"actual","p":["adj"]},{"w":"actually","p":["adv"]},{"w":"adapt","p":["v"]},{"w":"addict","p":["n"]},{"w":"addictive","p":["adj"]},{"w":"addition","p":["n"]},{"w":"additional","p":["adj"]},{"w":"address","p":["n","v"]},{"w":"adequate","p":["adj"]},{"w":"adjust","p":["v"]},{"w":"administration","p":["n"]},{"w":"admit","p":["v"]},{"w":"adopt","p":["v"]},{"w":"adulthood","p":["n"]},{"w":"advance","p":["n","v"]},{"w":"advanced","p":["adj"]},{"w":"advantage","p":["n"]},{"w":"adventure","p":["n"]},{"w":"advertise","p":["v"]},{"w":"advertising","p":["n"]},{"w":"advocate","p":["n","v"]},{"w":"aerial","p":["adj"]},{"w":"affair","p":["n"]},{"w":"affect","p":["v"]},{"w":"affection","p":["n"]},{"w":"affluent","p":["adj"]},{"w":"afford","p":["v"]},{"w":"affordable","p":["adj"]},{"w":"afterwards","p":["adv"]},{"w":"aged","p":["adj"]},{"w":"agency","p":["n"]},{"w":"agent","p":["n"]},{"w":"aggressive","p":["adj"]},{"w":"aging","p":["adj","n"]},{"w":"agreement","p":["n"]},{"w":"aircraft","p":["n"]},{"w":"aisle","p":["n"]},{"w":"alarm","p":["n","v"]},{"w":"alert","p":["adj","n","v"]},{"w":"alike","p":["adj","adv"]},{"w":"alive","p":["adj"]},{"w":"allowance","p":["n"]},{"w":"alter","p":["v"]},{"w":"alternative","p":["n"]},{"w":"altitude","p":["n"]},{"w":"amateur","p":["adj","n"]},{"w":"amazing","p":["adj"]},{"w":"ambition","p":["n"]},{"w":"ambitious","p":["adj"]},{"w":"amount","p":["n","v"]},{"w":"amuse","p":["v"]},{"w":"analyse","p":["v"]},{"w":"analysis","p":["n"]},{"w":"ancestor","p":["n"]},{"w":"ancient","p":["adj"]},{"w":"anniversary","p":["n"]},{"w":"announce","p":["v"]},{"w":"annual","p":["adj"]},{"w":"anticipate","p":["v"]},{"w":"anxiety","p":["n"]},{"w":"anxious","p":["adj"]},{"w":"apartment","p":["n"]},{"w":"apologize","p":["v"]},{"w":"apparent","p":["adj"]},{"w":"apparently","p":["adv"]},{"w":"appeal","p":["n","v"]},{"w":"appealing","p":["adj"]},{"w":"appearance","p":["n"]},{"w":"appetite","p":["n"]},{"w":"appliance","p":["n"]},{"w":"applicant","p":["n"]},{"w":"application","p":["n"]},{"w":"apply","p":["v"]},{"w":"appointment","p":["n"]},{"w":"appreciate","p":["v"]},{"w":"approach","p":["n","v"]},{"w":"appropriate","p":["adj"]},{"w":"approval","p":["n"]},{"w":"approve","p":["v"]},{"w":"approximately","p":["adv"]},{"w":"architect","p":["n"]},{"w":"architecture","p":["n"]},{"w":"argument","p":["n"]},{"w":"arouse","p":["v"]},{"w":"arrange","p":["v"]},{"w":"arrest","p":["n","v"]},{"w":"artificial","p":["adj"]},{"w":"artistic","p":["adj"]},{"w":"aspect","p":["n"]},{"w":"assess","p":["v"]},{"w":"asset","p":["n"]},{"w":"assign","p":["v"]},{"w":"assignment","p":["n"]},{"w":"assistance","p":["n"]},{"w":"assistant","p":["n"]},{"w":"associate","p":["n","v"]},{"w":"association","p":["n"]},{"w":"assume","p":["v"]},{"w":"assumption","p":["n"]},{"w":"assure","p":["v"]},{"w":"astronaut","p":["n"]},{"w":"athlete","p":["n"]},{"w":"atmosphere","p":["n"]},{"w":"attach","p":["v"]},{"w":"attack","p":["n","v"]},{"w":"attempt","p":["n","v"]},{"w":"attend","p":["v"]},{"w":"attention","p":["n"]},{"w":"attract","p":["v"]},{"w":"attraction","p":["n"]},{"w":"attractive","p":["adj"]},{"w":"attribute","p":["n","v"]},{"w":"audience","p":["n"]},{"w":"audio","p":["adj","n"]},{"w":"auditorium","p":["n"]},{"w":"authentic","p":["adj"]},{"w":"authority","p":["n"]},{"w":"authorize","p":["v"]},{"w":"automatic","p":["adj"]},{"w":"automobile","p":["n"]},{"w":"available","p":["adj"]},{"w":"average","p":["adj","n"]},{"w":"aviation","p":["n"]},{"w":"award","p":["n","v"]},{"w":"aware","p":["adj"]},{"w":"awareness","p":["n"]},{"w":"background","p":["n"]},{"w":"bacteria","p":["n"]},{"w":"balance","p":["n","v"]},{"w":"ban","p":["n","v"]},{"w":"barely","p":["adv"]},{"w":"barrier","p":["n"]},{"w":"basement","p":["n"]},{"w":"basis","p":["n"]},{"w":"battery","p":["n"]},{"w":"beginning","p":["n"]},{"w":"behalf","p":["n"]},{"w":"behave","p":["v"]},{"w":"behaviour","p":["n"]},{"w":"behavioural","p":["adj"]},{"w":"belief","p":["n"]},{"w":"beneficial","p":["adj"]},{"w":"benefit","p":["n"]},{"w":"beverage","p":["n"]},{"w":"bias","p":["n"]},{"w":"biology","p":["n"]},{"w":"blame","p":["n","v"]},{"w":"boast","p":["n","v"]},{"w":"bold","p":["adj"]},{"w":"bond","p":["n"]},{"w":"bonus","p":["n"]},{"w":"boom","p":["n","v"]},{"w":"boost","p":["n","v"]},{"w":"bother","p":["n","v"]},{"w":"bound","p":["adj","v"]},{"w":"boundary","p":["n"]},{"w":"branch","p":["n"]},{"w":"brand","p":["n"]},{"w":"breath","p":["n"]},{"w":"breathe","p":["v"]},{"w":"breed","p":["n","v"]},{"w":"brick","p":["n"]},{"w":"brief","p":["adj","n"]},{"w":"broad","p":["adj"]},{"w":"brutal","p":["adj"]},{"w":"bubble","p":["n"]},{"w":"budget","p":["n","v"]},{"w":"bundle","p":["n","v"]},{"w":"burden","p":["n","v"]},{"w":"bury","p":["v"]},{"w":"cabin","p":["n"]},{"w":"cable","p":["n"]},{"w":"calculate","p":["v"]},{"w":"calculation","p":["n"]},{"w":"calm","p":["adj","n","v"]},{"w":"calorie","p":["n"]},{"w":"campaign","p":["n"]},{"w":"campus","p":["n"]},{"w":"canal","p":["n"]},{"w":"capability","p":["n"]},{"w":"capable","p":["adj"]},{"w":"capacity","p":["n"]},{"w":"capture","p":["v"]},{"w":"carbon","p":["n"]},{"w":"career","p":["n"]},{"w":"cargo","p":["n"]},{"w":"carriage","p":["n"]},{"w":"carrier","p":["n"]},{"w":"cart","p":["n","v"]},{"w":"casual","p":["adj"]},{"w":"category","p":["n"]},{"w":"cater","p":["v"]},{"w":"caution","p":["n","v"]},{"w":"cautious","p":["adj"]},{"w":"ceiling","p":["n"]},{"w":"celebrate","p":["v"]},{"w":"cell","p":["n"]},{"w":"central","p":["adj"]},{"w":"cereal","p":["n"]},{"w":"ceremony","p":["n"]},{"w":"certificate","p":["n"]},{"w":"chain","p":["n","v"]},{"w":"challenge","p":["n","v"]},{"w":"champion","p":["n"]},{"w":"championship","p":["n"]},{"w":"character","p":["n"]},{"w":"characteristic","p":["adj","n"]},{"w":"characterize","p":["v"]},{"w":"charge","p":["n","v"]},{"w":"charity","p":["n"]},{"w":"charm","p":["n","v"]},{"w":"charter","p":["n","v"]},{"w":"chef","p":["n"]},{"w":"chemical","p":["adj","n"]},{"w":"chemistry","p":["n"]},{"w":"cholesterol","p":["n"]},{"w":"circumstance","p":["n"]},{"w":"cite","p":["v"]},{"w":"citizen","p":["n"]},{"w":"civil","p":["adj"]},{"w":"civilian","p":["adj","n"]},{"w":"claim","p":["n","v"]},{"w":"clarify","p":["v"]},{"w":"classic","p":["adj","n"]},{"w":"classify","p":["v"]},{"w":"clerk","p":["n"]},{"w":"client","p":["n"]},{"w":"clinic","p":["n"]},{"w":"clone","p":["n","v"]},{"w":"clue","p":["n"]},{"w":"coastal","p":["adj"]},{"w":"code","p":["n","v"]},{"w":"collaborate","p":["v"]},{"w":"collapse","p":["n","v"]},{"w":"colleague","p":["n"]},{"w":"collection","p":["n"]},{"w":"colony","p":["n"]},{"w":"combat","p":["n","v"]},{"w":"combination","p":["n"]},{"w":"combine","p":["v"]},{"w":"comfort","p":["n","v"]},{"w":"commercial","p":["adj","n"]},{"w":"commit","p":["v"]},{"w":"commitment","p":["n"]},{"w":"commodity","p":["n"]},{"w":"communicate","p":["v"]},{"w":"communication","p":["n"]},{"w":"communicative","p":["adj"]},{"w":"community","p":["n"]},{"w":"comparison","p":["n"]},{"w":"compatible","p":["adj"]},{"w":"compensate","p":["v"]},{"w":"compete","p":["v"]},{"w":"competent","p":["adj"]},{"w":"competition","p":["n"]},{"w":"competitive","p":["adj"]},{"w":"competitor","p":["n"]},{"w":"complain","p":["v"]},{"w":"complaint","p":["n"]},{"w":"completion","p":["n"]},{"w":"complex","p":["adj","n"]},{"w":"complicated","p":["adj"]},{"w":"complication","p":["n"]},{"w":"component","p":["n"]},{"w":"comprehend","p":["v"]},{"w":"compromise","p":["n","v"]},{"w":"compulsory","p":["adj"]},{"w":"conceal","p":["v"]},{"w":"concentrate","p":["v"]},{"w":"concentration","p":["n"]},{"w":"concept","p":["n"]},{"w":"concern","p":["n"]},{"w":"concerned","p":["adj"]},{"w":"conclude","p":["v"]},{"w":"conclusion","p":["n"]},{"w":"concrete","p":["adj","n"]},{"w":"condition","p":["n"]},{"w":"conduct","p":["v"]},{"w":"conference","p":["n"]},{"w":"confidence","p":["n"]},{"w":"confident","p":["adj"]},{"w":"confine","p":["v"]},{"w":"confirm","p":["v"]},{"w":"conflict","p":["n","v"]},{"w":"confuse","p":["v"]},{"w":"confusion","p":["n"]},{"w":"conscious","p":["adj"]},{"w":"consensus","p":["n"]},{"w":"consequence","p":["n"]},{"w":"considerable","p":["adj"]},{"w":"constant","p":["adj","n"]},{"w":"construct","p":["v"]},{"w":"construction","p":["n"]},{"w":"consultant","p":["n"]},{"w":"consume","p":["v"]},{"w":"consumer","p":["n"]},{"w":"consumption","p":["n"]},{"w":"contact","p":["n","v"]},{"w":"contain","p":["v"]},{"w":"container","p":["n"]},{"w":"contaminate","p":["v"]},{"w":"content","p":["n"]},{"w":"contest","p":["n","v"]},{"w":"context","p":["n"]},{"w":"continent","p":["n"]},{"w":"continuous","p":["adj"]},{"w":"contract","p":["n","v"]},{"w":"contradict","p":["v"]},{"w":"contrary","p":["adj","n"]},{"w":"contrast","p":["n","v"]},{"w":"contribute","p":["v"]},{"w":"contribution","p":["n"]},{"w":"controversial","p":["adj"]},{"w":"convenience","p":["n"]},{"w":"convenient","p":["adj"]},{"w":"conventional","p":["adj"]},{"w":"conversation","p":["n"]},{"w":"convert","p":["v"]},{"w":"convey","p":["v"]},{"w":"convince","p":["v"]},{"w":"cooperate","p":["v"]},{"w":"coordinate","p":["adj","v"]},{"w":"cope","p":["v"]},{"w":"core","p":["adj","n"]},{"w":"corporate","p":["adj"]},{"w":"corporation","p":["n"]},{"w":"costly","p":["adj"]},{"w":"council","p":["n"]},{"w":"counsel","p":["n","v"]},{"w":"counterpart","p":["n"]},{"w":"county","p":["n"]},{"w":"court","p":["n"]},{"w":"coverage","p":["n"]},{"w":"crack","p":["n","v"]},{"w":"craft","p":["n","v"]},{"w":"crash","p":["n","v"]},{"w":"creation","p":["n"]},{"w":"creative","p":["adj"]},{"w":"creature","p":["n"]},{"w":"credit","p":["n"]},{"w":"crew","p":["n"]},{"w":"crime","p":["n"]},{"w":"criminal","p":["adj","n"]},{"w":"crisis","p":["n"]},{"w":"critic","p":["n"]},{"w":"critical","p":["adj"]},{"w":"criticism","p":["n"]},{"w":"criticize","p":["v"]},{"w":"crowded","p":["adj"]},{"w":"crucial","p":["adj"]},{"w":"cruise","p":["n","v"]},{"w":"cultivate","p":["v"]},{"w":"cultural","p":["adj"]},{"w":"cure","p":["n","v"]},{"w":"curiosity","p":["n"]},{"w":"curious","p":["adj"]},{"w":"current","p":["adj"]},{"w":"curriculum","p":["n"]},{"w":"cycle","p":["n"]},{"w":"dam","p":["n"]},{"w":"damage","p":["n","v"]},{"w":"deadline","p":["n"]},{"w":"deadly","p":["adj"]},{"w":"dealer","p":["n"]},{"w":"debate","p":["n","v"]},{"w":"debt","p":["n"]},{"w":"decade","p":["n"]},{"w":"decisive","p":["adj"]},{"w":"deck","p":["n"]},{"w":"declare","p":["v"]},{"w":"decline","p":["n","v"]},{"w":"decorate","p":["v"]},{"w":"decrease","p":["n","v"]},{"w":"deed","p":["n"]},{"w":"deem","p":["v"]},{"w":"deeply","p":["adv"]},{"w":"defeat","p":["n","v"]},{"w":"defense","p":["n"]},{"w":"deficiency","p":["n"]},{"w":"deficit","p":["n"]},{"w":"define","p":["v"]},{"w":"definition","p":["n"]},{"w":"delay","p":["n","v"]},{"w":"delete","p":["v"]},{"w":"delight","p":["n","v"]},{"w":"deliver","p":["v"]},{"w":"delivery","p":["n"]},{"w":"demand","p":["n","v"]},{"w":"demonstrate","p":["v"]},{"w":"dense","p":["adj"]},{"w":"deny","p":["v"]},{"w":"department","p":["n"]},{"w":"dependent","p":["adj"]},{"w":"deposit","p":["n","v"]},{"w":"depression","p":["n"]},{"w":"depth","p":["n"]},{"w":"derive","p":["v"]},{"w":"description","p":["n"]},{"w":"desert","p":["n","v"]},{"w":"design","p":["n","v"]},{"w":"designer","p":["n"]},{"w":"desire","p":["n","v"]},{"w":"destination","p":["n"]},{"w":"destroy","p":["v"]},{"w":"destruction","p":["n"]},{"w":"detail","p":["n"]},{"w":"deteriorate","p":["v"]},{"w":"determine","p":["v"]},{"w":"determined","p":["adj"]},{"w":"develop","p":["v"]},{"w":"developer","p":["n"]},{"w":"development","p":["n"]},{"w":"device","p":["n"]},{"w":"devil","p":["n"]},{"w":"devote","p":["v"]},{"w":"diabetes","p":["n"]},{"w":"dictate","p":["v"]},{"w":"dietary","p":["adj"]},{"w":"differ","p":["v"]},{"w":"digest","p":["n","v"]},{"w":"digital","p":["adj"]},{"w":"dignity","p":["n"]},{"w":"dilemma","p":["n"]},{"w":"dioxide","p":["n"]},{"w":"dip","p":["n","v"]},{"w":"direction","p":["n"]},{"w":"dirt","p":["n"]},{"w":"disabled","p":["adj"]},{"w":"disappear","p":["v"]},{"w":"disaster","p":["n"]},{"w":"disastrous","p":["adj"]},{"w":"discard","p":["v"]},{"w":"discipline","p":["n","v"]},{"w":"discount","p":["n"]},{"w":"discover","p":["v"]},{"w":"discovery","p":["n"]},{"w":"discriminate","p":["v"]},{"w":"discrimination","p":["n"]},{"w":"discuss","p":["v"]},{"w":"discussion","p":["n"]},{"w":"dismiss","p":["v"]},{"w":"disorder","p":["n"]},{"w":"display","p":["n","v"]},{"w":"dispute","p":["n","v"]},{"w":"disrupt","p":["v"]},{"w":"disruptive","p":["adj"]},{"w":"distinguish","p":["v"]},{"w":"distribute","p":["v"]},{"w":"district","p":["n"]},{"w":"diverse","p":["adj"]},{"w":"diversity","p":["n"]},{"w":"divorce","p":["n","v"]},{"w":"document","p":["n"]},{"w":"domestic","p":["adj"]},{"w":"dominate","p":["v"]},{"w":"donate","p":["v"]},{"w":"donation","p":["n"]},{"w":"donor","p":["n"]},{"w":"dormitory","p":["n"]},{"w":"double","p":["v"]},{"w":"doubt","p":["n","v"]},{"w":"drama","p":["n"]},{"w":"dramatic","p":["adj"]},{"w":"dramatically","p":["adv"]},{"w":"drastic","p":["adj"]},{"w":"drastically","p":["adv"]},{"w":"drill","p":["n","v"]},{"w":"drought","p":["n"]},{"w":"drown","p":["v"]},{"w":"due","p":["adj"]},{"w":"durable","p":["adj"]},{"w":"duration","p":["n"]},{"w":"dynamic","p":["adj","n"]},{"w":"eager","p":["adj"]},{"w":"echo","p":["n","v"]},{"w":"economic","p":["adj"]},{"w":"economics","p":["n"]},{"w":"economist","p":["n"]},{"w":"economy","p":["n"]},{"w":"edge","p":["n"]},{"w":"edit","p":["n","v"]},{"w":"educate","p":["v"]},{"w":"educational","p":["adj"]},{"w":"educator","p":["n"]},{"w":"effect","p":["n"]},{"w":"effective","p":["adj"]},{"w":"efficiency","p":["n"]},{"w":"efficient","p":["adj"]},{"w":"elderly","p":["adj","n"]},{"w":"electric","p":["adj"]},{"w":"electricity","p":["n"]},{"w":"electronic","p":["adj"]},{"w":"electronics","p":["n"]},{"w":"element","p":["n"]},{"w":"elementary","p":["adj"]},{"w":"eliminate","p":["v"]},{"w":"elite","p":["adj","n"]},{"w":"elsewhere","p":["adv"]},{"w":"embrace","p":["n","v"]},{"w":"emerge","p":["v"]},{"w":"emergency","p":["n"]},{"w":"emission","p":["n"]},{"w":"emit","p":["v"]},{"w":"emotion","p":["n"]},{"w":"emotional","p":["adj"]},{"w":"emperor","p":["n"]},{"w":"emphasis","p":["n"]},{"w":"emphasize","p":["v"]},{"w":"empire","p":["n"]},{"w":"employ","p":["v"]},{"w":"employee","p":["n"]},{"w":"employer","p":["n"]},{"w":"employment","p":["n"]},{"w":"enable","p":["v"]},{"w":"encounter","p":["n","v"]},{"w":"encouragement","p":["n"]},{"w":"endanger","p":["v"]},{"w":"endless","p":["adj"]},{"w":"endurance","p":["n"]},{"w":"endure","p":["v"]},{"w":"energetic","p":["adj"]},{"w":"engage","p":["v"]},{"w":"engagement","p":["n"]},{"w":"engine","p":["n"]},{"w":"engineering","p":["n"]},{"w":"enhance","p":["v"]},{"w":"enjoyable","p":["adj"]},{"w":"enormous","p":["adj"]},{"w":"enrich","p":["v"]},{"w":"enrol","p":["v"]},{"w":"ensure","p":["v"]},{"w":"entertain","p":["v"]},{"w":"entertainment","p":["n"]},{"w":"enthusiasm","p":["n"]},{"w":"entire","p":["adj"]},{"w":"entrepreneur","p":["n"]},{"w":"environmental","p":["adj"]},{"w":"envy","p":["n","v"]},{"w":"episode","p":["n"]},{"w":"equal","p":["adj"]},{"w":"equality","p":["n"]},{"w":"equip","p":["v"]},{"w":"equipment","p":["n"]},{"w":"equivalent","p":["adj","n"]},{"w":"era","p":["n"]},{"w":"error","p":["n"]},{"w":"escape","p":["n","v"]},{"w":"essential","p":["adj","n"]},{"w":"establish","p":["v"]},{"w":"estate","p":["n"]},{"w":"estimate","p":["n","v"]},{"w":"ethic","p":["n"]},{"w":"ethnic","p":["adj"]},{"w":"evaluate","p":["v"]},{"w":"evaluation","p":["n"]},{"w":"event","p":["n"]},{"w":"eventually","p":["adv"]},{"w":"evidence","p":["n"]},{"w":"evil","p":["adj","n"]},{"w":"evolution","p":["n"]},{"w":"evolve","p":["v"]},{"w":"exact","p":["adj"]},{"w":"examine","p":["v"]},{"w":"exceed","p":["v"]},{"w":"excel","p":["v"]},{"w":"exception","p":["n"]},{"w":"excess","p":["adj","n"]},{"w":"excessive","p":["adj"]},{"w":"exchange","p":["n","v"]},{"w":"excitement","p":["n"]},{"w":"exclude","p":["v"]},{"w":"executive","p":["adj","n"]},{"w":"exert","p":["v"]},{"w":"exhaust","p":["n","v"]},{"w":"exhibit","p":["n","v"]},{"w":"exhibition","p":["n"]},{"w":"exist","p":["v"]},{"w":"existence","p":["n"]},{"w":"existing","p":["adj"]},{"w":"expand","p":["v"]},{"w":"expect","p":["v"]},{"w":"expectation","p":["n"]},{"w":"expense","p":["n"]},{"w":"experience","p":["n","v"]},{"w":"experienced","p":["adj"]},{"w":"expertise","p":["n"]},{"w":"explanation","p":["n"]},{"w":"explore","p":["v"]},{"w":"export","p":["n","v"]},{"w":"expose","p":["v"]},{"w":"expression","p":["n"]},{"w":"extend","p":["v"]},{"w":"extensive","p":["adj"]},{"w":"extent","p":["n"]},{"w":"exterior","p":["adj","n"]},{"w":"external","p":["adj"]},{"w":"extraordinary","p":["adj"]},{"w":"extreme","p":["adj"]},{"w":"eyesight","p":["n"]},{"w":"fabric","p":["n"]},{"w":"facilitate","p":["v"]},{"w":"facility","p":["n"]},{"w":"faculty","p":["n"]},{"w":"faith","p":["n"]},{"w":"fake","p":["adj","n","v"]},{"w":"fame","p":["n"]},{"w":"familiar","p":["adj"]},{"w":"fancy","p":["adj","v"]},{"w":"fare","p":["n"]},{"w":"farming","p":["n"]},{"w":"fascinate","p":["v"]},{"w":"fashionable","p":["adj"]},{"w":"fatal","p":["adj"]},{"w":"faulty","p":["adj"]},{"w":"favour","p":["n"]},{"w":"feasible","p":["adj"]},{"w":"feature","p":["n","v"]},{"w":"federal","p":["adj"]},{"w":"feedback","p":["n"]},{"w":"fellow","p":["adj","n"]},{"w":"female","p":["adj"]},{"w":"fibre","p":["n"]},{"w":"fiction","p":["n"]},{"w":"figure","p":["n"]},{"w":"finance","p":["n","v"]},{"w":"financial","p":["adj"]},{"w":"finding","p":["n"]},{"w":"fixed","p":["adj"]},{"w":"flavour","p":["n"]},{"w":"fleet","p":["n"]},{"w":"flexible","p":["adj"]},{"w":"flight","p":["n"]},{"w":"float","p":["n","v"]},{"w":"flow","p":["n","v"]},{"w":"focus","p":["n","v"]},{"w":"folk","p":["adj","n"]},{"w":"forecast","p":["n","v"]},{"w":"forge","p":["v"]},{"w":"formal","p":["adj"]},{"w":"format","p":["n","v"]},{"w":"formula","p":["n"]},{"w":"formulate","p":["v"]},{"w":"fortune","p":["n"]},{"w":"forward","p":["adj","adv"]},{"w":"fossil","p":["n"]},{"w":"foundation","p":["n"]},{"w":"founder","p":["n"]},{"w":"fragment","p":["n","v"]},{"w":"frame","p":["n","v"]},{"w":"framework","p":["n"]},{"w":"frequent","p":["adj"]},{"w":"freshman","p":["n"]},{"w":"frustrate","p":["v"]},{"w":"fuel","p":["n","v"]},{"w":"fulfil","p":["v"]},{"w":"function","p":["n","v"]},{"w":"fund","p":["n","v"]},{"w":"fundamental","p":["adj"]},{"w":"funding","p":["n"]},{"w":"furniture","p":["n"]},{"w":"further","p":["adj","adv"]},{"w":"furthermore","p":["adv"]},{"w":"gadget","p":["n"]},{"w":"gang","p":["n"]},{"w":"gap","p":["n"]},{"w":"gas","p":["n"]},{"w":"gender","p":["n"]},{"w":"generate","p":["v"]},{"w":"generation","p":["n"]},{"w":"genetic","p":["adj"]},{"w":"genius","p":["n"]},{"w":"genuine","p":["adj"]},{"w":"giant","p":["adj","n"]},{"w":"global","p":["adj"]},{"w":"globe","p":["n"]},{"w":"goods","p":["n"]},{"w":"grab","p":["v"]},{"w":"gradually","p":["adv"]},{"w":"graduate","p":["n","v"]},{"w":"graduation","p":["n"]},{"w":"grain","p":["n"]},{"w":"grant","p":["n","v"]},{"w":"grasp","p":["n","v"]},{"w":"grateful","p":["adj"]},{"w":"gratitude","p":["n"]},{"w":"gravity","p":["n"]},{"w":"greenhouse","p":["n"]},{"w":"grocery","p":["n"]},{"w":"growth","p":["n"]},{"w":"guarantee","p":["n","v"]},{"w":"guard","p":["n","v"]},{"w":"guide","p":["n","v"]},{"w":"guideline","p":["n"]},{"w":"habitat","p":["n"]},{"w":"halt","p":["n","v"]},{"w":"handful","p":["n"]},{"w":"handle","p":["n","v"]},{"w":"handwriting","p":["n"]},{"w":"harm","p":["n","v"]},{"w":"harmful","p":["adj"]},{"w":"harmony","p":["n"]},{"w":"harsh","p":["adj"]},{"w":"hazard","p":["n"]},{"w":"heal","p":["v"]},{"w":"heritage","p":["n"]},{"w":"high-tech","p":["adj"]},{"w":"highlight","p":["n","v"]},{"w":"highly","p":["adv"]},{"w":"highway","p":["n"]},{"w":"hinder","p":["v"]},{"w":"hire","p":["n","v"]},{"w":"historic","p":["adj"]},{"w":"historical","p":["adj"]},{"w":"honor","p":["n","v"]},{"w":"hook","p":["n","v"]},{"w":"horrible","p":["adj"]},{"w":"household","p":["adj","n"]},{"w":"housing","p":["n"]},{"w":"humanity","p":["n"]},{"w":"humble","p":["adj"]},{"w":"hunt","p":["n","v"]},{"w":"hunting","p":["n"]},{"w":"ideal","p":["adj","n"]},{"w":"identify","p":["v"]},{"w":"identity","p":["n"]},{"w":"ignore","p":["v"]},{"w":"illustrate","p":["v"]},{"w":"image","p":["n"]},{"w":"imagination","p":["n"]},{"w":"imitate","p":["v"]},{"w":"immediate","p":["adj"]},{"w":"immediately","p":["adv"]},{"w":"immigrant","p":["n"]},{"w":"immune","p":["adj"]},{"w":"impact","p":["n","v"]},{"w":"implement","p":["n","v"]},{"w":"implication","p":["n"]},{"w":"imply","p":["v"]},{"w":"import","p":["n","v"]},{"w":"impose","p":["v"]},{"w":"impression","p":["n"]},{"w":"improve","p":["v"]},{"w":"improvement","p":["n"]},{"w":"incentive","p":["n"]},{"w":"incidence","p":["n"]},{"w":"incident","p":["n"]},{"w":"increasingly","p":["adv"]},{"w":"incredible","p":["adj"]},{"w":"independence","p":["n"]},{"w":"independent","p":["adj"]},{"w":"index","p":["n"]},{"w":"indicate","p":["v"]},{"w":"indication","p":["n"]},{"w":"indifferent","p":["adj"]},{"w":"individual","p":["n"]},{"w":"indoor","p":["adj"]},{"w":"induce","p":["v"]},{"w":"industrial","p":["adj"]},{"w":"industry","p":["n"]},{"w":"inevitable","p":["adj"]},{"w":"infant","p":["n"]},{"w":"infect","p":["v"]},{"w":"infection","p":["n"]},{"w":"infer","p":["v"]},{"w":"influential","p":["adj"]},{"w":"inform","p":["v"]},{"w":"infrastructure","p":["n"]},{"w":"ingredient","p":["n"]},{"w":"inherit","p":["v"]},{"w":"initial","p":["adj"]},{"w":"initiative","p":["n"]},{"w":"injure","p":["v"]},{"w":"injury","p":["n"]},{"w":"inner","p":["adj"]},{"w":"innovation","p":["n"]},{"w":"innovative","p":["adj"]},{"w":"inquire","p":["v"]},{"w":"insight","p":["n"]},{"w":"insist","p":["v"]},{"w":"inspiration","p":["n"]},{"w":"inspire","p":["v"]},{"w":"install","p":["v"]},{"w":"instance","p":["n"]},{"w":"instant","p":["adj","n"]},{"w":"instinct","p":["n"]},{"w":"instinctive","p":["adj"]},{"w":"institute","p":["n","v"]},{"w":"institution","p":["n"]},{"w":"instructor","p":["n"]},{"w":"insurance","p":["n"]},{"w":"intake","p":["n"]},{"w":"integrate","p":["v"]},{"w":"intellectual","p":["adj","n"]},{"w":"intelligence","p":["n"]},{"w":"intelligent","p":["adj"]},{"w":"intend","p":["v"]},{"w":"intense","p":["adj"]},{"w":"intention","p":["n"]},{"w":"interact","p":["v"]},{"w":"interaction","p":["n"]},{"w":"interactive","p":["adj"]},{"w":"interfere","p":["v"]},{"w":"interior","p":["adj","n"]},{"w":"interpret","p":["v"]},{"w":"interview","p":["n","v"]},{"w":"intimate","p":["adj"]},{"w":"introduce","p":["v"]},{"w":"introduction","p":["n"]},{"w":"invest","p":["v"]},{"w":"investigate","p":["v"]},{"w":"investigation","p":["n"]},{"w":"investment","p":["n"]},{"w":"invisible","p":["adj"]},{"w":"involve","p":["v"]},{"w":"involved","p":["adj"]},{"w":"isolation","p":["n"]},{"w":"issue","p":["n"]},{"w":"item","p":["n"]},{"w":"jog","p":["n","v"]},{"w":"joint","p":["adj","n"]},{"w":"joy","p":["n"]},{"w":"judge","p":["n","v"]},{"w":"justice","p":["n"]},{"w":"keen","p":["adj"]},{"w":"knit","p":["v"]},{"w":"label","p":["n","v"]},{"w":"lack","p":["n","v"]},{"w":"ladder","p":["n"]},{"w":"landscape","p":["n"]},{"w":"lane","p":["n"]},{"w":"laptop","p":["n"]},{"w":"largely","p":["adv"]},{"w":"lately","p":["adv"]},{"w":"launch","p":["n","v"]},{"w":"layer","p":["n"]},{"w":"layout","p":["n"]},{"w":"leadership","p":["n"]},{"w":"lecture","p":["n","v"]},{"w":"legislation","p":["n"]},{"w":"leisure","p":["adj","n"]},{"w":"length","p":["n"]},{"w":"lens","p":["n"]},{"w":"license","p":["n","v"]},{"w":"limit","p":["n","v"]},{"w":"limited","p":["adj"]},{"w":"link","p":["n","v"]},{"w":"liquid","p":["adj","n"]},{"w":"literally","p":["adv"]},{"w":"literature","p":["n"]},{"w":"load","p":["n","v"]},{"w":"loan","p":["n","v"]},{"w":"locate","p":["v"]},{"w":"location","p":["n"]},{"w":"log","p":["n","v"]},{"w":"logic","p":["n"]},{"w":"logical","p":["adj"]},{"w":"loneliness","p":["n"]},{"w":"loose","p":["adj"]},{"w":"lorry","p":["n"]},{"w":"loss","p":["n"]},{"w":"lower","p":["adj","v"]},{"w":"loyalty","p":["n"]},{"w":"lunar","p":["adj"]},{"w":"luxury","p":["adj","n"]},{"w":"mainstream","p":["adj","n"]},{"w":"maintain","p":["v"]},{"w":"major","p":["adj","n","v"]},{"w":"majority","p":["n"]},{"w":"mammal","p":["n"]},{"w":"manage","p":["v"]},{"w":"management","p":["n"]},{"w":"manager","p":["n"]},{"w":"manipulate","p":["v"]},{"w":"manual","p":["adj","n"]},{"w":"manufacture","p":["n","v"]},{"w":"manufacturer","p":["n"]},{"w":"march","p":["n","v"]},{"w":"marine","p":["adj"]},{"w":"marital","p":["adj"]},{"w":"mass","p":["adj","n"]},{"w":"massive","p":["adj"]},{"w":"mathematical","p":["adj"]},{"w":"mayor","p":["n"]},{"w":"meaningful","p":["adj"]},{"w":"measure","p":["n","v"]},{"w":"mechanism","p":["n"]},{"w":"melt","p":["v"]},{"w":"membership","p":["n"]},{"w":"memorize","p":["v"]},{"w":"mental","p":["adj"]},{"w":"mentality","p":["n"]},{"w":"mere","p":["adj"]},{"w":"merely","p":["adv"]},{"w":"microwave","p":["n","v"]},{"w":"middle-class","p":["adj"]},{"w":"migrate","p":["v"]},{"w":"military","p":["adj","n"]},{"w":"mineral","p":["adj","n"]},{"w":"minister","p":["n"]},{"w":"minor","p":["adj","n"]},{"w":"minority","p":["n"]},{"w":"miserable","p":["adj"]},{"w":"missing","p":["adj"]},{"w":"mission","p":["n"]},{"w":"misunderstanding","p":["n"]},{"w":"moderate","p":["adj","v"]},{"w":"monitor","p":["n","v"]},{"w":"monster","p":["n"]},{"w":"moral","p":["adj","n"]},{"w":"motivate","p":["v"]},{"w":"mount","p":["v"]},{"w":"mud","p":["n"]},{"w":"mule","p":["n"]},{"w":"multiple","p":["adj"]},{"w":"murder","p":["n","v"]},{"w":"muscle","p":["n"]},{"w":"mystery","p":["n"]},{"w":"myth","p":["n"]},{"w":"nap","p":["n","v"]},{"w":"narrative","p":["adj","n"]},{"w":"narrow","p":["adj","v"]},{"w":"native","p":["adj","n"]},{"w":"naturally","p":["adv"]},{"w":"naval","p":["adj"]},{"w":"necessarily","p":["adv"]},{"w":"necessity","p":["n"]},{"w":"negative","p":["adj","n"]},{"w":"neglect","p":["n","v"]},{"w":"negotiate","p":["v"]},{"w":"neighbourhood","p":["n"]},{"w":"nerve","p":["n"]},{"w":"nest","p":["n","v"]},{"w":"network","p":["n","v"]},{"w":"neutral","p":["adj","n"]},{"w":"nevertheless","p":["adv"]},{"w":"nightmare","p":["n"]},{"w":"norm","p":["n"]},{"w":"notion","p":["n"]},{"w":"novel","p":["adj","n"]},{"w":"numerous","p":["adj"]},{"w":"nut","p":["n"]},{"w":"nutrient","p":["n"]},{"w":"nutrition","p":["n"]},{"w":"obese","p":["adj"]},{"w":"obesity","p":["n"]},{"w":"objective","p":["adj","n"]},{"w":"observe","p":["v"]},{"w":"obstacle","p":["n"]},{"w":"obtain","p":["v"]},{"w":"obvious","p":["adj"]},{"w":"occasion","p":["n"]},{"w":"occasionally","p":["adv"]},{"w":"occupy","p":["v"]},{"w":"occur","p":["v"]},{"w":"occurrence","p":["n"]},{"w":"odd","p":["adj"]},{"w":"offend","p":["v"]},{"w":"official","p":["adj"]},{"w":"old-fashioned","p":["adj"]},{"w":"ongoing","p":["adj"]},{"w":"opening","p":["n"]},{"w":"operation","p":["n"]},{"w":"opponent","p":["n"]},{"w":"opportunity","p":["n"]},{"w":"oppose","p":["v"]},{"w":"opt","p":["v"]},{"w":"optimism","p":["n"]},{"w":"optimistic","p":["adj"]},{"w":"option","p":["n"]},{"w":"orbit","p":["n","v"]},{"w":"ordinary","p":["adj"]},{"w":"organic","p":["adj"]},{"w":"organization","p":["n"]},{"w":"origin","p":["n"]},{"w":"original","p":["adj","n"]},{"w":"originate","p":["v"]},{"w":"outbreak","p":["n"]},{"w":"outcome","p":["n"]},{"w":"outdated","p":["adj"]},{"w":"outdoor","p":["adj"]},{"w":"outer","p":["adj"]},{"w":"outlet","p":["n"]},{"w":"outstanding","p":["adj"]},{"w":"overall","p":["adj","adv"]},{"w":"overcome","p":["v"]},{"w":"overlook","p":["v"]},{"w":"overseas","p":["adj","adv"]},{"w":"overwhelm","p":["v"]},{"w":"overwhelming","p":["adj"]},{"w":"oxygen","p":["n"]},{"w":"pace","p":["n","v"]},{"w":"package","p":["n"]},{"w":"painful","p":["adj"]},{"w":"palm","p":["n"]},{"w":"panic","p":["n","v"]},{"w":"parade","p":["n","v"]},{"w":"parental","p":["adj"]},{"w":"participant","p":["n"]},{"w":"participate","p":["v"]},{"w":"particle","p":["n"]},{"w":"particular","p":["adj"]},{"w":"particularly","p":["adv"]},{"w":"partnership","p":["n"]},{"w":"passion","p":["n"]},{"w":"passionate","p":["adj"]},{"w":"passive","p":["adj"]},{"w":"patch","p":["n","v"]},{"w":"patience","p":["n"]},{"w":"pattern","p":["n"]},{"w":"payment","p":["n"]},{"w":"peak","p":["n","v"]},{"w":"peer","p":["n"]},{"w":"penalty","p":["n"]},{"w":"pension","p":["n"]},{"w":"perceive","p":["v"]},{"w":"percentage","p":["n"]},{"w":"perception","p":["n"]},{"w":"perfection","p":["n"]},{"w":"perform","p":["v"]},{"w":"performance","p":["n"]},{"w":"peril","p":["n"]},{"w":"permanent","p":["adj"]},{"w":"permission","p":["n"]},{"w":"permit","p":["n","v"]},{"w":"persistent","p":["adj"]},{"w":"personality","p":["n"]},{"w":"personally","p":["adv"]},{"w":"perspective","p":["n"]},{"w":"persuasion","p":["n"]},{"w":"phase","p":["n"]},{"w":"phenomenon","p":["n"]},{"w":"philosophy","p":["n"]},{"w":"physical","p":["adj"]},{"w":"physician","p":["n"]},{"w":"pioneer","p":["n","v"]},{"w":"pipe","p":["n"]},{"w":"pitch","p":["n","v"]},{"w":"planning","p":["n"]},{"w":"plastic","p":["adj","n"]},{"w":"platform","p":["n"]},{"w":"pleasant","p":["adj"]},{"w":"pledge","p":["n","v"]},{"w":"poison","p":["n","v"]},{"w":"poisonous","p":["adj"]},{"w":"pole","p":["n"]},{"w":"policy","p":["n"]},{"w":"political","p":["adj"]},{"w":"politician","p":["n"]},{"w":"politics","p":["n"]},{"w":"pollution","p":["n"]},{"w":"portion","p":["n"]},{"w":"pose","p":["n","v"]},{"w":"positive","p":["adj"]},{"w":"possess","p":["v"]},{"w":"possibility","p":["n"]},{"w":"potential","p":["adj","n"]},{"w":"poverty","p":["n"]},{"w":"powerful","p":["adj"]},{"w":"practical","p":["adj"]},{"w":"precious","p":["adj"]},{"w":"precise","p":["adj"]},{"w":"predict","p":["v"]},{"w":"predictable","p":["adj"]},{"w":"prefer","p":["v"]},{"w":"preference","p":["n"]},{"w":"preparation","p":["n"]},{"w":"prescribe","p":["v"]},{"w":"presence","p":["n"]},{"w":"preserve","p":["v"]},{"w":"pressure","p":["n"]},{"w":"prevent","p":["v"]},{"w":"previous","p":["adj"]},{"w":"prime","p":["adj","n"]},{"w":"principle","p":["n"]},{"w":"prior","p":["adj"]},{"w":"priority","p":["n"]},{"w":"privacy","p":["n"]},{"w":"procedure","p":["n"]},{"w":"proceed","p":["v"]},{"w":"process","p":["n"]},{"w":"production","p":["n"]},{"w":"productive","p":["adj"]},{"w":"productivity","p":["n"]},{"w":"profession","p":["n"]},{"w":"professional","p":["adj"]},{"w":"proficient","p":["adj"]},{"w":"profit","p":["n","v"]},{"w":"profitable","p":["adj"]},{"w":"promote","p":["v"]},{"w":"prompt","p":["adj","n","v"]},{"w":"property","p":["n"]},{"w":"proportion","p":["n"]},{"w":"proposal","p":["n"]},{"w":"propose","p":["v"]},{"w":"prospect","p":["n"]},{"w":"prospective","p":["adj"]},{"w":"protection","p":["n"]},{"w":"protein","p":["n"]},{"w":"psychological","p":["adj"]},{"w":"psychologist","p":["n"]},{"w":"psychology","p":["n"]},{"w":"publish","p":["v"]},{"w":"pump","p":["n","v"]},{"w":"purchase","p":["n","v"]},{"w":"pure","p":["adj"]},{"w":"pursue","p":["v"]},{"w":"pursuit","p":["n"]},{"w":"puzzle","p":["n","v"]},{"w":"qualify","p":["v"]},{"w":"quality","p":["n"]},{"w":"quantity","p":["n"]},{"w":"quit","p":["v"]},{"w":"racial","p":["adj"]},{"w":"radical","p":["adj"]},{"w":"range","p":["n","v"]},{"w":"rare","p":["adj"]},{"w":"rarely","p":["adv"]},{"w":"rate","p":["n","v"]},{"w":"rational","p":["adj"]},{"w":"ray","p":["n"]},{"w":"react","p":["v"]},{"w":"reaction","p":["n"]},{"w":"readily","p":["adv"]},{"w":"realistic","p":["adj"]},{"w":"reality","p":["n"]},{"w":"realm","p":["n"]},{"w":"reap","p":["v"]},{"w":"reasonable","p":["adj"]},{"w":"recall","p":["n","v"]},{"w":"receipt","p":["n"]},{"w":"recently","p":["adv"]},{"w":"recession","p":["n"]},{"w":"recipient","p":["n"]},{"w":"recite","p":["v"]},{"w":"recognition","p":["n"]},{"w":"recommend","p":["v"]},{"w":"recommendation","p":["n"]},{"w":"recover","p":["v"]},{"w":"recovery","p":["n"]},{"w":"recreation","p":["n"]},{"w":"recruit","p":["n","v"]},{"w":"recycle","p":["v"]},{"w":"reduce","p":["v"]},{"w":"reduction","p":["n"]},{"w":"refer","p":["v"]},{"w":"reference","p":["n"]},{"w":"refine","p":["v"]},{"w":"reflect","p":["v"]},{"w":"reflection","p":["n"]},{"w":"reform","p":["n","v"]},{"w":"refrain","p":["v"]},{"w":"refuse","p":["v"]},{"w":"regard","p":["n","v"]},{"w":"regardless","p":["adv"]},{"w":"region","p":["n"]},{"w":"register","p":["n","v"]},{"w":"regular","p":["adj"]},{"w":"regulate","p":["v"]},{"w":"regulation","p":["n"]},{"w":"reject","p":["v"]},{"w":"relate","p":["v"]},{"w":"relaxation","p":["n"]},{"w":"release","p":["n","v"]},{"w":"relevant","p":["adj"]},{"w":"reliable","p":["adj"]},{"w":"relief","p":["n"]},{"w":"relieve","p":["v"]},{"w":"reluctant","p":["adj"]},{"w":"rely","p":["v"]},{"w":"remarkable","p":["adj"]},{"w":"remind","p":["v"]},{"w":"remote","p":["adj"]},{"w":"remove","p":["v"]},{"w":"render","p":["v"]},{"w":"renew","p":["v"]},{"w":"renewable","p":["adj"]},{"w":"renovate","p":["v"]},{"w":"renovation","p":["n"]},{"w":"repeatedly","p":["adv"]},{"w":"repetitive","p":["adj"]},{"w":"replace","p":["v"]},{"w":"represent","p":["v"]},{"w":"representative","p":["adj","n"]},{"w":"reproduce","p":["v"]},{"w":"reputation","p":["n"]},{"w":"request","p":["n","v"]},{"w":"requirement","p":["n"]},{"w":"rescue","p":["n","v"]},{"w":"resemble","p":["v"]},{"w":"reserve","p":["n","v"]},{"w":"resident","p":["adj","n"]},{"w":"resolve","p":["n","v"]},{"w":"resort","p":["n","v"]},{"w":"resource","p":["n"]},{"w":"respect","p":["n","v"]},{"w":"respond","p":["v"]},{"w":"response","p":["n"]},{"w":"responsibility","p":["n"]},{"w":"responsible","p":["adj"]},{"w":"restore","p":["v"]},{"w":"retain","p":["v"]},{"w":"retirement","p":["n"]},{"w":"reveal","p":["v"]},{"w":"revenue","p":["n"]},{"w":"reverse","p":["adj","n","v"]},{"w":"revolution","p":["n"]},{"w":"revolutionary","p":["adj","n"]},{"w":"reward","p":["n","v"]},{"w":"rid","p":["v"]},{"w":"rival","p":["adj","n","v"]},{"w":"roast","p":["n","v"]},{"w":"roll","p":["n","v"]},{"w":"romantic","p":["adj"]},{"w":"rough","p":["adj"]},{"w":"roughly","p":["adv"]},{"w":"route","p":["n"]},{"w":"routine","p":["adj","n"]},{"w":"royal","p":["adj"]},{"w":"ruin","p":["n","v"]},{"w":"salary","p":["n"]},{"w":"sample","p":["n","v"]},{"w":"satisfaction","p":["n"]},{"w":"scale","p":["n","v"]},{"w":"scan","p":["n","v"]},{"w":"scare","p":["n","v"]},{"w":"scary","p":["adj"]},{"w":"schedule","p":["n","v"]},{"w":"scholar","p":["n"]},{"w":"scholarship","p":["n"]},{"w":"schooling","p":["n"]},{"w":"scientific","p":["adj"]},{"w":"scratch","p":["n","v"]},{"w":"scream","p":["n","v"]},{"w":"seasonal","p":["adj"]},{"w":"second-hand","p":["adj"]},{"w":"secondary","p":["adj"]},{"w":"secretary","p":["n"]},{"w":"sector","p":["n"]},{"w":"secure","p":["adj"]},{"w":"security","p":["n"]},{"w":"seemingly","p":["adv"]},{"w":"semester","p":["n"]},{"w":"senior","p":["adj","n"]},{"w":"sensible","p":["adj"]},{"w":"sensitive","p":["adj"]},{"w":"series","p":["n"]},{"w":"session","p":["n"]},{"w":"setback","p":["n"]},{"w":"settle","p":["v"]},{"w":"severe","p":["adj"]},{"w":"shade","p":["n"]},{"w":"sharp","p":["adj"]},{"w":"shelter","p":["n","v"]},{"w":"shift","p":["n","v"]},{"w":"shoot","p":["n","v"]},{"w":"shore","p":["n"]},{"w":"shortage","p":["n"]},{"w":"shrink","p":["v"]},{"w":"shuttle","p":["n","v"]},{"w":"sign","p":["n","v"]},{"w":"signal","p":["n","v"]},{"w":"signature","p":["n"]},{"w":"significant","p":["adj"]},{"w":"simply","p":["adv"]},{"w":"sink","p":["n","v"]},{"w":"site","p":["n"]},{"w":"situation","p":["n"]},{"w":"skilled","p":["adj"]},{"w":"skyscraper","p":["n"]},{"w":"slide","p":["n","v"]},{"w":"slim","p":["adj"]},{"w":"slip","p":["n","v"]},{"w":"slope","p":["n","v"]},{"w":"so-called","p":["adj"]},{"w":"soar","p":["v"]},{"w":"soda","p":["n"]},{"w":"solar","p":["adj"]},{"w":"solid","p":["adj"]},{"w":"solution","p":["n"]},{"w":"sophisticated","p":["adj"]},{"w":"source","p":["n"]},{"w":"southeast","p":["adj","adv","n"]},{"w":"span","p":["n","v"]},{"w":"spare","p":["adj","v"]},{"w":"species","p":["n"]},{"w":"specific","p":["adj"]},{"w":"specifically","p":["adv"]},{"w":"spill","p":["n","v"]},{"w":"spirit","p":["n"]},{"w":"spite","p":["n"]},{"w":"split","p":["n","v"]},{"w":"spokesperson","p":["n"]},{"w":"sponsor","p":["n","v"]},{"w":"spot","p":["n","v"]},{"w":"spouse","p":["n"]},{"w":"spray","p":["n","v"]},{"w":"spread","p":["n","v"]},{"w":"spur","p":["n","v"]},{"w":"squeeze","p":["n","v"]},{"w":"stability","p":["n"]},{"w":"stable","p":["adj"]},{"w":"stack","p":["n","v"]},{"w":"statistic","p":["n"]},{"w":"status","p":["n"]},{"w":"stimulate","p":["v"]},{"w":"sting","p":["n","v"]},{"w":"stock","p":["n","v"]},{"w":"storage","p":["n"]},{"w":"straightforward","p":["adj"]},{"w":"strain","p":["n","v"]},{"w":"strategy","p":["n"]},{"w":"stream","p":["n","v"]},{"w":"strength","p":["n"]},{"w":"strengthen","p":["v"]},{"w":"stressful","p":["adj"]},{"w":"stretch","p":["n","v"]},{"w":"strike","p":["n","v"]},{"w":"striking","p":["adj"]},{"w":"strip","p":["n","v"]},{"w":"strive","p":["v"]},{"w":"stroke","p":["n","v"]},{"w":"structure","p":["n","v"]},{"w":"struggle","p":["n","v"]},{"w":"stuff","p":["n"]},{"w":"subjective","p":["adj"]},{"w":"submit","p":["v"]},{"w":"substantial","p":["adj"]},{"w":"suffer","p":["v"]},{"w":"suffering","p":["n"]},{"w":"sufficient","p":["adj"]},{"w":"suggestion","p":["n"]},{"w":"sum","p":["n","v"]},{"w":"superficial","p":["adj"]},{"w":"superior","p":["adj","n"]},{"w":"supply","p":["n","v"]},{"w":"supportive","p":["adj"]},{"w":"suppose","p":["v"]},{"w":"surface","p":["n"]},{"w":"surgery","p":["n"]},{"w":"surround","p":["v"]},{"w":"surroundings","p":["n"]},{"w":"survive","p":["v"]},{"w":"suspect","p":["n","v"]},{"w":"suspend","p":["v"]},{"w":"suspicion","p":["n"]},{"w":"sustain","p":["v"]},{"w":"sustainable","p":["adj"]},{"w":"swallow","p":["n","v"]},{"w":"sweat","p":["n","v"]},{"w":"swell","p":["v"]},{"w":"switch","p":["n","v"]},{"w":"symbol","p":["n"]},{"w":"sympathy","p":["n"]},{"w":"symptom","p":["n"]},{"w":"systematic","p":["adj"]},{"w":"tablet","p":["n"]},{"w":"tackle","p":["n","v"]},{"w":"talented","p":["adj"]},{"w":"tank","p":["n"]},{"w":"tap","p":["n","v"]},{"w":"target","p":["n","v"]},{"w":"tasty","p":["adj"]},{"w":"technique","p":["n"]},{"w":"technological","p":["adj"]},{"w":"tedious","p":["adj"]},{"w":"temporary","p":["adj"]},{"w":"tend","p":["v"]},{"w":"tendency","p":["n"]},{"w":"tension","p":["n"]},{"w":"theme","p":["n"]},{"w":"theory","p":["n"]},{"w":"therapy","p":["n"]},{"w":"thesis","p":["n"]},{"w":"threat","p":["n"]},{"w":"threaten","p":["v"]},{"w":"thrive","p":["v"]},{"w":"tide","p":["n"]},{"w":"timely","p":["adj"]},{"w":"tissue","p":["n"]},{"w":"tough","p":["adj"]},{"w":"tourism","p":["n"]},{"w":"trace","p":["n","v"]},{"w":"track","p":["n","v"]},{"w":"trail","p":["n","v"]},{"w":"transaction","p":["n"]},{"w":"transfer","p":["n","v"]},{"w":"transform","p":["v"]},{"w":"translate","p":["v"]},{"w":"transport","p":["n","v"]},{"w":"transportation","p":["n"]},{"w":"trap","p":["n","v"]},{"w":"trash","p":["n"]},{"w":"treasure","p":["n","v"]},{"w":"tremendous","p":["adj"]},{"w":"trend","p":["n"]},{"w":"trial","p":["n"]},{"w":"trigger","p":["n","v"]},{"w":"troop","p":["n"]},{"w":"truly","p":["adv"]},{"w":"tuition","p":["n"]},{"w":"tunnel","p":["n"]},{"w":"typical","p":["adj"]},{"w":"ultimate","p":["adj","n"]},{"w":"ultimately","p":["adv"]},{"w":"underestimate","p":["v"]},{"w":"undergo","p":["v"]},{"w":"undergraduate","p":["adj","n"]},{"w":"undermine","p":["v"]},{"w":"understanding","p":["n"]},{"w":"undertake","p":["v"]},{"w":"unemployment","p":["n"]},{"w":"uniform","p":["adj","n"]},{"w":"union","p":["n"]},{"w":"unique","p":["adj"]},{"w":"universal","p":["adj"]},{"w":"update","p":["n","v"]},{"w":"upgrade","p":["n","v"]},{"w":"upper","p":["adj"]},{"w":"upright","p":["adj"]},{"w":"urban","p":["adj"]},{"w":"urge","p":["n","v"]},{"w":"urgent","p":["adj"]},{"w":"usage","p":["n"]},{"w":"vague","p":["adj"]},{"w":"valuable","p":["adj"]},{"w":"vanish","p":["v"]},{"w":"variety","p":["n"]},{"w":"various","p":["adj"]},{"w":"vary","p":["v"]},{"w":"vast","p":["adj"]},{"w":"vegetarian","p":["adj","n"]},{"w":"vehicle","p":["n"]},{"w":"vendor","p":["n"]},{"w":"venture","p":["n","v"]},{"w":"verbal","p":["adj"]},{"w":"verify","p":["v"]},{"w":"version","p":["n"]},{"w":"vessel","p":["n"]},{"w":"victim","p":["n"]},{"w":"vigorous","p":["adj"]},{"w":"violate","p":["v"]},{"w":"violence","p":["n"]},{"w":"virtual","p":["adj"]},{"w":"virus","p":["n"]},{"w":"visa","p":["n"]},{"w":"visible","p":["adj"]},{"w":"vision","p":["n"]},{"w":"visual","p":["adj"]},{"w":"vital","p":["adj"]},{"w":"vitamin","p":["n"]},{"w":"volcano","p":["n"]},{"w":"volume","p":["n"]},{"w":"volunteer","p":["n","v"]},{"w":"vote","p":["n","v"]},{"w":"voyage","p":["n","v"]},{"w":"vulnerable","p":["adj"]},{"w":"wage","p":["n"]},{"w":"wander","p":["v"]},{"w":"warning","p":["n"]},{"w":"wave","p":["n","v"]},{"w":"weaken","p":["v"]},{"w":"weakness","p":["n"]},{"w":"wealthy","p":["adj"]},{"w":"weave","p":["v"]},{"w":"wedding","p":["n"]},{"w":"weigh","p":["v"]},{"w":"weight","p":["n"]},{"w":"weird","p":["adj"]},{"w":"welfare","p":["n"]},{"w":"well-being","p":["n"]},{"w":"well-known","p":["adj"]},{"w":"widespread","p":["adj"]},{"w":"wildlife","p":["n"]},{"w":"willing","p":["adj"]},{"w":"willpower","p":["n"]},{"w":"wisdom","p":["n"]},{"w":"witness","p":["n","v"]},{"w":"wooden","p":["adj"]},{"w":"workforce","p":["n"]},{"w":"workshop","p":["n"]},{"w":"worldwide","p":["adj","adv"]},{"w":"wreck","p":["n","v"]},{"w":"yearly","p":["adj","adv"]},{"w":"yield","p":["n","v"]}];
+const POS = ['n','v','adj','adv'];
+const KEY = 'pos-drill-v1';
+
+/* ---------- state ---------- */
+let S = { meta:{}, queue:[], nest:{}, round:0 };
+try{
+  const raw = localStorage.getItem(KEY);
+  if(raw) S = Object.assign(S, JSON.parse(raw));
+}catch(e){}
+if(!S.round) S.round = Date.now();
+
+const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} };
+const idx = {}; WORDS.forEach((x,i)=> idx[x.w]=i);
+const lastOf = w => (S.meta[w] && S.meta[w][0]) || 0;
+
+/* ---------- queue ---------- */
+function refill(){
+  if(S.queue.length >= 20) return;
+  const inQ = new Set(S.queue);
+  const pool = WORDS.filter(x => !inQ.has(x.w));
+  if(!pool.length) return;
+  // 没见过的词绝对优先(本轮全覆盖);全见过之后,从最久没见的一小撮里随机抽
+  let head = pool.filter(x => !lastOf(x.w));
+  if(!head.length){
+    pool.sort((a,b) => lastOf(a.w) - lastOf(b.w));
+    head = pool.slice(0, Math.max(40, Math.ceil(pool.length/12)));
+  }
+  for(let i=head.length-1;i>0;i--){const j=(Math.random()*(i+1))|0;[head[i],head[j]]=[head[j],head[i]];}
+  for(const x of head){ if(S.queue.length>=20) break; S.queue.push(x.w); }
+}
+const insert = (w, gap) => S.queue.splice(Math.min(gap, S.queue.length), 0, w);
+const rnd = (a,b) => a + ((Math.random()*(b-a+1))|0);
+
+/* ---------- round counter ---------- */
+function seenCount(){
+  let n=0; for(const w in S.meta) if(S.meta[w][0] >= S.round) n++;
+  return n;
+}
+function tickRound(){
+  if(seenCount() >= WORDS.length) S.round = Date.now();
+}
+
+/* ---------- render ---------- */
+const $ = id => document.getElementById(id);
+let cur=null, picked=new Set(), reviewing=false;
+
+$('total').textContent = WORDS.length;
+const btns = {};
+POS.forEach(p => {
+  const b = document.createElement('button');
+  b.className='pos'; b.setAttribute('aria-pressed','false');
+  b.innerHTML = `${p}.<span class="mark"></span>`;
+  b.onclick = () => {
+    if(reviewing) return;
+    picked.has(p) ? picked.delete(p) : picked.add(p);
+    b.setAttribute('aria-pressed', picked.has(p));
+    $('act').disabled = picked.size===0;
+  };
+  btns[p]=b; $('grid').appendChild(b);
+});
+
+function paint(){
+  reviewing=false; picked.clear();
+  POS.forEach(p=>{
+    const b=btns[p];
+    b.className='pos'; b.setAttribute('aria-pressed','false');
+    b.querySelector('.mark').textContent='';
+  });
+  $('act').textContent='提交'; $('act').className='act'; $('act').disabled=true;
+  $('word').textContent = cur.w;
+  $('nest').textContent = Object.keys(S.nest).length;
+  $('seen').textContent = seenCount();
+  sayReady();
+}
+
+function nextWord(){
+  let w;
+  do{ refill(); w = S.queue.shift(); }while(w !== undefined && idx[w] === undefined);
+  cur = WORDS[idx[w]];
+  paint();
+}
+
+/* ---------- answer ---------- */
+function submit(){
+  const ans = new Set(cur.p);
+  const ok = ans.size===picked.size && [...ans].every(p=>picked.has(p));
+
+  S.meta[cur.w] = [Date.now(), (S.meta[cur.w]||[0,0])[1] + (ok?0:1)];
+  tickRound();
+
+  if(ok){
+    const st = S.nest[cur.w];
+    if(st){
+      st.streak++;
+      if(st.streak>=2) delete S.nest[cur.w];
+      else insert(cur.w, rnd(5,8));
+    }
+    save(); nextWord(); return;   // 立刻跳,零反馈
+  }
+
+  const st = S.nest[cur.w] || {strikes:0, streak:0};
+  st.strikes++; st.streak=0; S.nest[cur.w]=st;
+  const gap = st.strikes===1 ? rnd(3,5) : st.strikes===2 ? rnd(2,3) : rnd(1,2);
+  insert(cur.w, gap);
+  save(); review(ans);
+}
+
+function review(ans){
+  reviewing=true;
+  POS.forEach(p=>{
+    const b=btns[p], m=b.querySelector('.mark');
+    b.setAttribute('aria-pressed','false');
+    if(ans.has(p) && picked.has(p)){ b.className='pos hit'; m.textContent='✓'; }
+    else if(ans.has(p)){ b.className='pos miss'; m.textContent='漏'; }
+    else if(picked.has(p)){ b.className='pos bad'; m.textContent='✕'; }
+    else { b.className='pos off'; m.textContent=''; }
+  });
+  $('act').textContent='下一个'; $('act').className='act next'; $('act').disabled=false;
+  $('nest').textContent = Object.keys(S.nest).length;
+}
+
+$('act').onclick = () => reviewing ? nextWord() : submit();
+
+/* ---------- speech ---------- */
+let voice=null, dead=false;
+function pickVoice(){
+  let v=[]; try{ v = speechSynthesis.getVoices()||[]; }catch(e){}
+  const en = v.filter(x=>/^en(-|_|$)/i.test(x.lang));
+  voice = en.find(x=>x.localService && /US/i.test(x.lang)) || en.find(x=>x.localService) || en[0] || null;
+  $('diag').textContent = `voices ${v.length} · en ${en.length} · ${voice? voice.name.slice(0,18):'none'}`;
+}
+if('speechSynthesis' in window){
+  pickVoice();
+  speechSynthesis.onvoiceschanged = pickVoice;
+}else{
+  dead=true; $('diag').textContent='no speechSynthesis';
+}
+function sayReady(){
+  const b=$('say');
+  b.className = dead ? 'say dead' : 'say';
+  b.textContent = dead ? '无语音' : '🔊';
+}
+$('say').onclick = () => {
+  if(!('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(cur.w);
+    u.lang = voice ? voice.lang : 'en-US';
+    if(voice) u.voice = voice;
+    u.rate = 0.9;
+    u.onerror = e => { $('diag').textContent = 'speak error: ' + (e.error||'?'); };
+    if(!voice) pickVoice();
+    speechSynthesis.speak(u);
+  }catch(e){ $('diag').textContent = 'speak throw: ' + e.message; }
+};
+
+/* ---------- reset ---------- */
+$('reset').onclick = () => {
+  if(!confirm('清空全部进度,从头开始?')) return;
+  localStorage.removeItem(KEY);
+  S = { meta:{}, queue:[], nest:{}, round:Date.now() };
+  nextWord();
+};
+
+/* ---------- go ---------- */
+nextWord();
+if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>
