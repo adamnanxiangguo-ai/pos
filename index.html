@@ -121,6 +121,54 @@ body{
 .foot u{cursor:pointer}
 .note{color:var(--rev);flex:1;text-align:center}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* ---- sync sheet ---- */
+.sheet{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);
+  display:none;align-items:flex-end;justify-content:center;z-index:9;
+}
+.sheet.on{display:flex}
+.card{
+  width:100%;max-width:620px;max-height:88dvh;overflow-y:auto;
+  background:var(--bg);border-top:1px solid var(--line);
+  border-radius:16px 16px 0 0;
+  padding:18px 16px calc(env(safe-area-inset-bottom) + 18px);
+}
+.shead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.shead b{font-size:1rem;letter-spacing:.1em}
+.x{font-size:18px;color:var(--dim);padding:4px 8px}
+.sec{padding:16px 0;border-top:1px solid var(--line);margin-top:10px}
+.lbl{font-size:.9rem;font-weight:600;margin-bottom:5px}
+.sub{font-size:.75rem;color:var(--dim);line-height:1.5;margin-bottom:9px}
+.sheet textarea{
+  width:100%;height:88px;resize:none;
+  background:var(--surface);color:var(--text);
+  border:1px solid var(--line);border-radius:9px;padding:9px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.45;
+  word-break:break-all;-webkit-user-select:text;user-select:text;
+}
+.btn{
+  width:100%;min-height:44px;margin-top:9px;border-radius:10px;
+  border:1px solid var(--line);background:var(--surface);color:var(--text);
+  font-size:.88rem;letter-spacing:.08em;
+}
+.btn:active{background:var(--line)}
+.warn{font-size:.75rem;color:var(--pick);line-height:1.5;margin-top:9px}
+
+/* ---- phone ---- */
+@media (max-width:560px){
+  #app{padding-left:12px;padding-right:12px}
+  .status{font-size:10px;letter-spacing:.08em}
+  .stage{gap:12px}
+  .say{width:46px;height:46px;font-size:17px}
+  .panel{min-height:66px;padding:9px 12px}
+  .panel .cn{font-size:.95rem}
+  .pos{min-height:82px;font-size:1.75rem}    /* 拇指区，按钮要更大 */
+  .act{min-height:62px}
+  .mini{min-height:48px}
+  .key{display:none}                          /* 手机没键盘 */
+  .foot{font-size:11px;margin-top:12px}
+}
 </style>
 </head>
 <body>
@@ -150,11 +198,34 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   </div>
 
   <div class="foot">
-    <u id="exp">导出备份</u>
+    <u id="sync">同步</u>
     <span class="note" id="note"></span>
-    <u id="imp">导入</u>
+    <u id="exp">下载备份</u>
   </div>
-  <input type="file" id="file" accept=".json" style="display:none">
+</div>
+
+<div class="sheet" id="sheet">
+  <div class="card">
+    <div class="shead">
+      <b>同步</b>
+      <button class="x" id="close">✕</button>
+    </div>
+
+    <div class="sec">
+      <div class="lbl">把这台的进度带走</div>
+      <div class="sub" id="mystat">—</div>
+      <textarea id="out" readonly></textarea>
+      <button class="btn" id="copy">复制同步码</button>
+    </div>
+
+    <div class="sec">
+      <div class="lbl">合并另一台的进度</div>
+      <div class="sub">粘贴另一台的同步码，两边数据会合并，不会互相覆盖</div>
+      <textarea id="in" placeholder="在这里粘贴同步码"></textarea>
+      <button class="btn" id="merge">合并</button>
+      <div class="warn" id="warn"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -354,28 +425,120 @@ $('finish').onclick = () => {
   toast(n ? `${n} 个词已排入明天` : '今天没有要复习的词');
 };
 
-/* ---------- 备份 ---------- */
+/* ---------- 同步 ---------- */
 function toast(t){ $('note').textContent=t; setTimeout(()=>{ if($('note').textContent===t) $('note').textContent=''; },4000); }
+
+// 词 → 序号，时间 → 分钟，再 gzip，最后 base64
+const B64 = u => { let s=''; for(let i=0;i<u.length;i+=8192) s+=String.fromCharCode(...u.subarray(i,i+8192)); return btoa(s).replace(/=+$/,''); };
+const UNB64 = s => { const b=atob(s); const u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; };
+const gz = async u => new Response(new Blob([u]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer();
+const ungz = async u => new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+
+async function enc(){
+  const meta={}, srs={};
+  for(const w in S.meta) if(idx[w]!==undefined) meta[idx[w]]=Math.round(S.meta[w]/6e4);
+  for(const w in S.srs)  if(idx[w]!==undefined) srs[idx[w]]=[S.srs[w].st, S.srs[w].due];
+  const raw = JSON.stringify({v:2, t:Date.now(), n:WORDS.length, meta, srs,
+                              pool:S.pool.map(w=>idx[w]).filter(i=>i!==undefined), pd:S.poolDate});
+  const bytes = new TextEncoder().encode(raw);
+  if(typeof CompressionStream==='undefined') return 'R' + B64(bytes);      // 老浏览器兜底
+  return 'Z' + B64(new Uint8Array(await gz(bytes)));
+}
+
+async function dec(s){
+  s = s.trim().replace(/\s+/g,'');
+  let d;
+  try{
+    const tag = s[0], body = s.slice(1);
+    let bytes = UNB64(body);
+    if(tag==='Z') bytes = new Uint8Array(await ungz(bytes));
+    else if(tag!=='R') throw 0;
+    d = JSON.parse(new TextDecoder().decode(bytes));
+  }catch(e){ throw new Error('这段不是同步码，检查是不是复制全了'); }
+  if(d.v!==2 || !d.meta || !d.srs) throw new Error('这段不是同步码');
+  if(d.n !== WORDS.length) throw new Error('两台的词库版本不一样，先把两边都更新到最新版');
+  return d;
+}
+
+// 合并：逐词取更新的那一份，复习计划取更靠前的一站
+function merge(d){
+  let touched=0, adv=0;
+  for(const i in d.meta){
+    const w=WORDS[i] && WORDS[i].w; if(!w) continue;
+    const t=d.meta[i]*6e4;
+    if(!S.meta[w] || t>S.meta[w]){ S.meta[w]=t; touched++; }
+  }
+  for(const i in d.srs){
+    const w=WORDS[i] && WORDS[i].w; if(!w) continue;
+    const [st,due]=d.srs[i], mine=S.srs[w];
+    if(!mine){ S.srs[w]={st,due}; adv++; }
+    else if(st>mine.st || (st===mine.st && due>mine.due)){ S.srs[w]={st,due}; adv++; }
+  }
+  if(d.pd===bj()) for(const i of (d.pool||[])){
+    const w=WORDS[i] && WORDS[i].w;
+    if(w && !S.pool.includes(w)) S.pool.push(w);
+  }
+  save(); judged.clear(); buildRQ(); nextWord();
+  return {touched, adv};
+}
+
+const fmtAge = t => {
+  const m=Math.round((Date.now()-t)/6e4);
+  if(m<2) return '刚刚';
+  if(m<60) return m+' 分钟前';
+  if(m<1440) return Math.round(m/60)+' 小时前';
+  return Math.round(m/1440)+' 天前';
+};
+function lastTouch(){ let m=0; for(const w in S.meta) if(S.meta[w]>m) m=S.meta[w]; return m; }
+
+$('sync').onclick = async () => {
+  $('out').value='生成中…';
+  $('sheet').classList.add('on');
+  $('out').value = await enc();
+  const lt=lastTouch();
+  $('mystat').textContent = `这台：${Object.keys(S.meta).length} 个词有记录 · ${Object.keys(S.srs).length} 个在复习计划里 · 最后一次刷词 ${lt?fmtAge(lt):'无'}`;
+  $('in').value=''; $('warn').textContent='';
+  $('merge').dataset.ok=''; $('merge').textContent='合并';
+};
+$('close').onclick = () => $('sheet').classList.remove('on');
+$('sheet').onclick = e => { if(e.target===$('sheet')) $('sheet').classList.remove('on'); };
+
+$('copy').onclick = () => {
+  const t=$('out');
+  t.select(); t.setSelectionRange(0, 999999);
+  const done = () => { $('copy').textContent='已复制'; setTimeout(()=>$('copy').textContent='复制同步码',2000); };
+  if(navigator.clipboard) navigator.clipboard.writeText(t.value).then(done, ()=>{ document.execCommand('copy'); done(); });
+  else { document.execCommand('copy'); done(); }
+};
+
+$('merge').onclick = async () => {
+  const v=$('in').value.trim();
+  if(!v){ $('warn').textContent='先粘贴同步码'; return; }
+  let d;
+  try{ d=await dec(v); }catch(e){ $('warn').textContent=e.message; return; }
+  const mine=lastTouch();
+  if(d.t < mine - 6e4){
+    // 防呆：对面比这台旧
+    if($('merge').dataset.ok!=='1'){
+      $('merge').dataset.ok='1';
+      $('merge').textContent='仍要合并';
+      $('warn').textContent=`这段码是 ${fmtAge(d.t)}生成的，比这台的进度旧。合并不会删东西，但可能没有新内容。再点一次继续。`;
+      return;
+    }
+  }
+  $('merge').dataset.ok=''; $('merge').textContent='合并';
+  const r=merge(d);
+  $('warn').textContent='';
+  $('sheet').classList.remove('on');
+  toast(r.touched||r.adv ? `已合并：${r.touched} 个词更新，${r.adv} 个复习计划推进`
+                         : '合并完成，这段码里没有新内容');
+};
+
 $('exp').onclick = () => {
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));
   a.download=`词性备份-${bj()}.json`; a.click();
   toast('备份已下载');
-};
-$('imp').onclick = () => $('file').click();
-$('file').onchange = e => {
-  const f=e.target.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{
-    try{
-      const d=JSON.parse(r.result);
-      if(!d.srs||!d.meta) throw 0;
-      S=Object.assign({meta:{},queue:[],nest:{},round:Date.now(),pool:[],poolDate:bj(),srs:{}}, d);
-      save(); judged.clear(); buildRQ(); nextWord();
-      toast('已导入');
-    }catch(err){ toast('文件不对，没导入'); }
-  };
-  r.readAsText(f); e.target.value='';
 };
 
 /* ---------- 发音 ---------- */
