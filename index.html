@@ -435,10 +435,11 @@ const gz = async u => new Response(new Blob([u]).stream().pipeThrough(new Compre
 const ungz = async u => new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
 
 async function enc(){
-  const meta={}, srs={};
+  const meta={}, srs={}, nest={};
   for(const w in S.meta) if(idx[w]!==undefined) meta[idx[w]]=Math.round(S.meta[w]/6e4);
   for(const w in S.srs)  if(idx[w]!==undefined) srs[idx[w]]=[S.srs[w].st, S.srs[w].due];
-  const raw = JSON.stringify({v:2, t:Date.now(), n:WORDS.length, meta, srs,
+  for(const w in S.nest) if(idx[w]!==undefined) nest[idx[w]]=[S.nest[w].strikes, S.nest[w].streak];
+  const raw = JSON.stringify({v:2, t:Date.now(), n:WORDS.length, meta, srs, nest, r:S.round,
                               pool:S.pool.map(w=>idx[w]).filter(i=>i!==undefined), pd:S.poolDate});
   const bytes = new TextEncoder().encode(raw);
   if(typeof CompressionStream==='undefined') return 'R' + B64(bytes);      // 老浏览器兜底
@@ -463,6 +464,8 @@ async function dec(s){
 // 合并：逐词取更新的那一份，复习计划取更靠前的一站
 function merge(d){
   let touched=0, adv=0;
+  // 本轮起点取更早的那个：两台属于同一轮，早的那个才涵盖全部进度
+  if(d.r && d.r < S.round) S.round = d.r;
   for(const i in d.meta){
     const w=WORDS[i] && WORDS[i].w; if(!w) continue;
     const t=d.meta[i]*6e4;
@@ -474,10 +477,16 @@ function merge(d){
     if(!mine){ S.srs[w]={st,due}; adv++; }
     else if(st>mine.st || (st===mine.st && due>mine.due)){ S.srs[w]={st,due}; adv++; }
   }
+  for(const i in (d.nest||{})){
+    const w=WORDS[i] && WORDS[i].w; if(!w) continue;
+    const [strikes,streak]=d.nest[i], mine=S.nest[w];
+    if(!mine || strikes>mine.strikes) S.nest[w]={strikes,streak};
+  }
   if(d.pd===bj()) for(const i of (d.pool||[])){
     const w=WORDS[i] && WORDS[i].w;
     if(w && !S.pool.includes(w)) S.pool.push(w);
   }
+  if(seenCount()>=WORDS.length) S.round=Date.now();   // 合并后正好满一轮 → 开新轮
   save(); judged.clear(); buildRQ(); nextWord();
   return {touched, adv};
 }
