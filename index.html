@@ -147,6 +147,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.45;
   word-break:break-all;-webkit-user-select:text;user-select:text;
 }
+.inp{
+  width:100%;margin-bottom:8px;
+  background:var(--surface);color:var(--text);
+  border:1px solid var(--line);border-radius:9px;padding:11px 10px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+  -webkit-user-select:text;user-select:text;
+}
+.inp::placeholder{color:var(--dim);opacity:.7}
 .btn{
   width:100%;min-height:44px;margin-top:9px;border-radius:10px;
   border:1px solid var(--line);background:var(--surface);color:var(--text);
@@ -207,23 +215,25 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 <div class="sheet" id="sheet">
   <div class="card">
     <div class="shead">
-      <b>同步</b>
+      <b>同步 <span style="font-size:.7rem;font-weight:400;color:var(--dim);letter-spacing:.05em">版本 4</span></b>
       <button class="x" id="close">✕</button>
     </div>
 
-    <div class="sec">
-      <div class="lbl">把这台的进度带走</div>
-      <div class="sub" id="mystat">—</div>
-      <textarea id="out" readonly></textarea>
-      <button class="btn" id="copy">复制同步码</button>
+    <div class="sec" id="setup">
+      <div class="lbl">连接 GitHub</div>
+      <div class="sub">连上之后，两台设备自动同步，不用再手动做任何事。令牌只存在这台设备上，不会写进代码。</div>
+      <input class="inp" id="repo" placeholder="仓库，例如 adamnanxiangguo-ai/pos-data">
+      <input class="inp" id="tok" type="password" placeholder="粘贴访问令牌">
+      <button class="btn" id="conn">连接</button>
+      <div class="warn" id="warn"></div>
     </div>
 
-    <div class="sec">
-      <div class="lbl">合并另一台的进度</div>
-      <div class="sub">粘贴另一台的同步码，两边数据会合并，不会互相覆盖</div>
-      <textarea id="in" placeholder="在这里粘贴同步码"></textarea>
-      <button class="btn" id="merge">合并</button>
-      <div class="warn" id="warn"></div>
+    <div class="sec" id="panel2" style="display:none">
+      <div class="lbl">已连接</div>
+      <div class="sub" id="mystat">—</div>
+      <button class="btn" id="now">立刻同步一次</button>
+      <button class="btn" id="unlink" style="border-color:var(--wrong);color:var(--wrong)">断开这台设备</button>
+      <div class="warn" id="warn2"></div>
     </div>
   </div>
 </div>
@@ -238,9 +248,10 @@ const GAP = [2, 4];           // 过第1站→+2天(1→3)，过第2站→+4天(
 const bj = (off=0) => new Date(Date.now() + 8*3600e3 + off*864e5).toISOString().slice(0,10);
 
 /* ---------- state ---------- */
-let S = { meta:{}, queue:[], nest:{}, round:0, pool:[], poolDate:'', srs:{} };
+let S = { meta:{}, queue:[], nest:{}, round:0, pool:[], poolDate:'', srs:{}, gone:{} };
 try{ const r=localStorage.getItem(KEY); if(r) S=Object.assign(S, JSON.parse(r)); }catch(e){}
 if(!S.round) S.round = Date.now();
+if(!S.gone) S.gone = {};
 
 const idx={}; WORDS.forEach((x,i)=>idx[x.w]=i);
 const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} };
@@ -361,10 +372,11 @@ function submit(){
   if(inReview && S.srs[w] && !judged.has(w)){
     judged.add(w);
     const rec=S.srs[w];
-    if(!ok)            S.srs[w]={st:0, due:bj(1)};              // 打回第1站，重走 1-3-7
-    else if(peeked)    S.srs[w]={st:rec.st, due:bj(1)};          // 偷看 → 不给学分，原站明天再来
-    else if(rec.st>=2) delete S.srs[w];                          // 过第3站 → 毕业
-    else               S.srs[w]={st:rec.st+1, due:bj(GAP[rec.st])};
+    const now=Date.now();
+    if(!ok)            S.srs[w]={st:0, due:bj(1), m:now};         // 打回第1站，重走 1-3-7
+    else if(peeked)    S.srs[w]={st:rec.st, due:bj(1), m:now};    // 偷看 → 不给学分，原站明天再来
+    else if(rec.st>=2){ delete S.srs[w]; S.gone[w]=now; }         // 过第3站 → 毕业
+    else               S.srs[w]={st:rec.st+1, due:bj(GAP[rec.st]), m:now};
   }
 
   // 2) 今日池：只收日常场答错的（偷看的已在 reveal 里收过）
@@ -376,14 +388,14 @@ function submit(){
     const st=S.nest[w]||{strikes:0,streak:0};
     st.strikes++; st.streak=0; S.nest[w]=st;
     put(w, st.strikes===1?rnd(3,5):st.strikes===2?rnd(2,3):rnd(1,2));
-    save(); showAnswer(); return;
+    save(); bump(); showAnswer(); return;
   }
   const st=S.nest[w];
   if(st){
     if(peeked){ put(w, rnd(5,8)); }              // 偷看不给连对学分，但继续循环
     else { st.streak++; if(st.streak>=2) delete S.nest[w]; else put(w, rnd(5,8)); }
   }
-  save(); nextWord();
+  save(); bump(); nextWord();
 }
 
 function showAnswer(){
@@ -419,128 +431,193 @@ $('finish').onclick = () => {
   const tm=bj(1); let n=0;
   for(const w of new Set(S.pool)){
     if(S.srs[w]) continue;                      // 已在复习计划里的不重复排
-    S.srs[w]={st:0, due:tm}; n++;
+    S.srs[w]={st:0, due:tm, m:Date.now()}; delete S.gone[w]; n++;
   }
-  S.pool=[]; S.poolDate=bj(); save();
+  S.pool=[]; S.poolDate=bj(); save(); if(cfg.token) sync();
   toast(n ? `${n} 个词已排入明天` : '今天没有要复习的词');
 };
 
 /* ---------- 同步 ---------- */
 function toast(t){ $('note').textContent=t; setTimeout(()=>{ if($('note').textContent===t) $('note').textContent=''; },4000); }
 
-// 词 → 序号，时间 → 分钟，再 gzip，最后 base64
-const B64 = u => { let s=''; for(let i=0;i<u.length;i+=8192) s+=String.fromCharCode(...u.subarray(i,i+8192)); return btoa(s).replace(/=+$/,''); };
-const UNB64 = s => { const b=atob(s); const u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; };
+const B64 = u => { let s=''; for(let i=0;i<u.length;i+=8192) s+=String.fromCharCode(...u.subarray(i,i+8192)); return btoa(s); };
+const UNB64 = s => { const b=atob(s.replace(/\s+/g,'')); const u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; };
 const gz = async u => new Response(new Blob([u]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer();
 const ungz = async u => new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
 
-async function enc(){
-  const meta={}, srs={}, nest={};
+/* 打包：词→序号，时间→分钟 */
+function snapshot(){
+  const meta={}, srs={}, nest={}, gone={};
   for(const w in S.meta) if(idx[w]!==undefined) meta[idx[w]]=Math.round(S.meta[w]/6e4);
-  for(const w in S.srs)  if(idx[w]!==undefined) srs[idx[w]]=[S.srs[w].st, S.srs[w].due];
+  for(const w in S.srs)  if(idx[w]!==undefined) srs[idx[w]]=[S.srs[w].st, S.srs[w].due, S.srs[w].m||0];
   for(const w in S.nest) if(idx[w]!==undefined) nest[idx[w]]=[S.nest[w].strikes, S.nest[w].streak];
-  const raw = JSON.stringify({v:2, t:Date.now(), n:WORDS.length, meta, srs, nest, r:S.round,
-                              pool:S.pool.map(w=>idx[w]).filter(i=>i!==undefined), pd:S.poolDate});
-  const bytes = new TextEncoder().encode(raw);
-  if(typeof CompressionStream==='undefined') return 'R' + B64(bytes);      // 老浏览器兜底
-  return 'Z' + B64(new Uint8Array(await gz(bytes)));
+  for(const w in S.gone) if(idx[w]!==undefined) gone[idx[w]]=S.gone[w];
+  return {v:3, t:Date.now(), n:WORDS.length, meta, srs, nest, gone, r:S.round,
+          pool:S.pool.map(w=>idx[w]).filter(i=>i!==undefined), pd:S.poolDate};
 }
 
-async function dec(s){
-  s = s.trim().replace(/\s+/g,'');
-  let d;
-  try{
-    const tag = s[0], body = s.slice(1);
-    let bytes = UNB64(body);
-    if(tag==='Z') bytes = new Uint8Array(await ungz(bytes));
-    else if(tag!=='R') throw 0;
-    d = JSON.parse(new TextDecoder().decode(bytes));
-  }catch(e){ throw new Error('这段不是同步码，检查是不是复制全了'); }
-  if(d.v!==2 || !d.meta || !d.srs) throw new Error('这段不是同步码');
-  if(d.n !== WORDS.length) throw new Error('两台的词库版本不一样，先把两边都更新到最新版');
-  return d;
-}
-
-// 合并：逐词取更新的那一份，复习计划取更靠前的一站
+/* 合并：只增不减，除非有更新的毕业记录 */
 function merge(d){
   let touched=0, adv=0;
-  // 本轮起点取更早的那个：两台属于同一轮，早的那个才涵盖全部进度
+  if(!d){ judged.clear(); buildRQ(); if(inReview&&cur) rq=rq.filter(w=>w!==cur.w); stats(); return {touched,adv}; }
   if(d.r && d.r < S.round) S.round = d.r;
+
   for(const i in d.meta){
     const w=WORDS[i] && WORDS[i].w; if(!w) continue;
     const t=d.meta[i]*6e4;
     if(!S.meta[w] || t>S.meta[w]){ S.meta[w]=t; touched++; }
   }
+  for(const i in (d.gone||{})){
+    const w=WORDS[i] && WORDS[i].w; if(!w) continue;
+    if(!S.gone[w] || d.gone[i]>S.gone[w]) S.gone[w]=d.gone[i];
+  }
   for(const i in d.srs){
     const w=WORDS[i] && WORDS[i].w; if(!w) continue;
-    const [st,due]=d.srs[i], mine=S.srs[w];
-    if(!mine){ S.srs[w]={st,due}; adv++; }
-    else if(st>mine.st || (st===mine.st && due>mine.due)){ S.srs[w]={st,due}; adv++; }
+    const e=d.srs[i], st=e[0], due=e[1], m=e[2]||0, mine=S.srs[w];
+    if(!mine){
+      if(S.gone[w] && S.gone[w] > m) continue;          // 本地已毕业，且比对面新 → 不复活
+      S.srs[w]={st,due,m}; adv++;
+    }else if(m && mine.m ? m>mine.m : (st>mine.st || (st===mine.st && due>mine.due))){
+      S.srs[w]={st,due,m}; adv++;
+    }
   }
+  // 对面的毕业记录比本地计划新 → 本地也毕业
+  for(const w in S.gone){
+    if(S.srs[w] && S.gone[w] > (S.srs[w].m||0)){ delete S.srs[w]; adv++; }
+  }
+  // 毕业记录留 60 天就够了
+  const cut=Date.now()-60*864e5;
+  for(const w in S.gone) if(S.gone[w]<cut) delete S.gone[w];
+
   for(const i in (d.nest||{})){
     const w=WORDS[i] && WORDS[i].w; if(!w) continue;
-    const [strikes,streak]=d.nest[i], mine=S.nest[w];
-    if(!mine || strikes>mine.strikes) S.nest[w]={strikes,streak};
+    const e=d.nest[i], mine=S.nest[w];
+    if(!mine || e[0]>mine.strikes) S.nest[w]={strikes:e[0], streak:e[1]};
   }
   if(d.pd===bj()) for(const i of (d.pool||[])){
     const w=WORDS[i] && WORDS[i].w;
     if(w && !S.pool.includes(w)) S.pool.push(w);
   }
-  if(seenCount()>=WORDS.length) S.round=Date.now();   // 合并后正好满一轮 → 开新轮
-  save(); judged.clear(); buildRQ(); nextWord();
+  if(seenCount()>=WORDS.length) S.round=Date.now();
+  save();
+  judged.clear(); buildRQ();
+  if(inReview && cur) rq = rq.filter(w => w!==cur.w);   // 别把正在答的词重复排进来
+  stats();
   return {touched, adv};
 }
 
-const fmtAge = t => {
-  const m=Math.round((Date.now()-t)/6e4);
-  if(m<2) return '刚刚';
-  if(m<60) return m+' 分钟前';
-  if(m<1440) return Math.round(m/60)+' 小时前';
-  return Math.round(m/1440)+' 天前';
-};
-function lastTouch(){ let m=0; for(const w in S.meta) if(S.meta[w]>m) m=S.meta[w]; return m; }
+/* ---------- GitHub 传输 ---------- */
+const SK='pos-sync';
+let cfg={}; try{ cfg=JSON.parse(localStorage.getItem(SK))||{}; }catch(e){}
+let sha=null, busy=false, dirty=false, lastPush=0, lastTry=0, idle=null, state='';
 
-$('sync').onclick = async () => {
-  $('out').value='生成中…';
-  $('sheet').classList.add('on');
-  $('out').value = await enc();
-  const lt=lastTouch();
-  $('mystat').textContent = `这台：${Object.keys(S.meta).length} 个词有记录 · ${Object.keys(S.srs).length} 个在复习计划里 · 最后一次刷词 ${lt?fmtAge(lt):'无'}`;
-  $('in').value=''; $('warn').textContent='';
-  $('merge').dataset.ok=''; $('merge').textContent='合并';
-};
+const api = (opt={}) => fetch(
+  `https://api.github.com/repos/${cfg.repo}/contents/state.bin`,
+  {...opt, headers:{Authorization:`Bearer ${cfg.token}`, Accept:'application/vnd.github+json',
+                    'X-GitHub-Api-Version':'2022-11-28', ...(opt.headers||{})}});
+
+function setState(s){
+  state=s;
+  const m={pull:'同步中…', push:'同步中…', ok:'同步 ✓', off:'同步 · 离线', err:'同步 ✕', none:'同步'}[s]||'同步';
+  $('sync').textContent=m;
+  $('sync').style.color = s==='err' ? 'var(--wrong)' : '';
+}
+
+async function pull(){
+  const r=await api();
+  if(r.status===404){ sha=null; return null; }
+  if(r.status===401 || r.status===403) throw new Error('令牌无效或没权限');
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  const j=await r.json();
+  sha=j.sha;
+  if(!j.content) return null;
+  const d=JSON.parse(new TextDecoder().decode(new Uint8Array(await ungz(UNB64(j.content)))));
+  if(d.n && d.n!==WORDS.length) throw new Error('云端词库版本不一样，先把两台都更新');
+  return d;
+}
+
+async function put(keepalive){
+  const bytes=new TextEncoder().encode(JSON.stringify(snapshot()));
+  const body={message:`sync ${new Date().toISOString().slice(0,16)}`,
+              content:B64(new Uint8Array(await gz(bytes)))};
+  if(sha) body.sha=sha;
+  const r=await api({method:'PUT', body:JSON.stringify(body), keepalive:!!keepalive});
+  if(r.status===409 || r.status===422){ const e=new Error('冲突'); e.conflict=1; throw e; }
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  sha=(await r.json()).content.sha;
+}
+
+async function sync(opt={}){
+  if(!cfg.token || !cfg.repo || busy) return;
+  if(!opt.loud && state==='err' && Date.now()-lastTry < 6e4) return;   // 失败后退避 1 分钟
+  busy=true; lastTry=Date.now();
+  try{
+    setState('pull');
+    merge(await pull());
+    setState('push');
+    try{ await put(opt.keepalive); }
+    catch(e){
+      if(!e.conflict) throw e;
+      merge(await pull());                 // 有人先写了 → 重新合并再推
+      await put(opt.keepalive);
+    }
+    dirty=false; lastPush=Date.now();
+    setState('ok');
+  }catch(e){
+    setState((navigator.onLine===false || e instanceof TypeError) ? 'off' : 'err');
+    if(opt.loud) $('warn2').textContent='同步失败：'+e.message;
+  }finally{ busy=false; }
+}
+
+/* 触发时机：停手 20 秒、连续刷 5 分钟、离开页面、结算 */
+function bump(){
+  if(!cfg.token) return;
+  dirty=true;
+  clearTimeout(idle);
+  idle=setTimeout(()=>sync(), 20000);
+  if(Date.now()-lastPush > 3e5) sync();
+}
+addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='hidden' && dirty) sync({keepalive:true}); });
+addEventListener('online', ()=>{ if(dirty) sync(); });
+
+/* ---------- 同步面板 ---------- */
+function showPanel(){
+  const on=!!(cfg.token&&cfg.repo);
+  $('setup').style.display = on?'none':'';
+  $('panel2').style.display = on?'':'none';
+  if(on) $('mystat').textContent =
+    `${cfg.repo} · 本地 ${Object.keys(S.meta).length} 个词有记录，${Object.keys(S.srs).length} 个在复习计划里`;
+  $('warn').textContent=''; $('warn2').textContent='';
+}
+$('sync').onclick = () => { $('repo').value=cfg.repo||'adamnanxiangguo-ai/pos-data'; $('tok').value=cfg.token||''; showPanel(); $('sheet').classList.add('on'); };
 $('close').onclick = () => $('sheet').classList.remove('on');
 $('sheet').onclick = e => { if(e.target===$('sheet')) $('sheet').classList.remove('on'); };
 
-$('copy').onclick = () => {
-  const t=$('out');
-  t.select(); t.setSelectionRange(0, 999999);
-  const done = () => { $('copy').textContent='已复制'; setTimeout(()=>$('copy').textContent='复制同步码',2000); };
-  if(navigator.clipboard) navigator.clipboard.writeText(t.value).then(done, ()=>{ document.execCommand('copy'); done(); });
-  else { document.execCommand('copy'); done(); }
-};
-
-$('merge').onclick = async () => {
-  const v=$('in').value.trim();
-  if(!v){ $('warn').textContent='先粘贴同步码'; return; }
-  let d;
-  try{ d=await dec(v); }catch(e){ $('warn').textContent=e.message; return; }
-  const mine=lastTouch();
-  if(d.t < mine - 6e4){
-    // 防呆：对面比这台旧
-    if($('merge').dataset.ok!=='1'){
-      $('merge').dataset.ok='1';
-      $('merge').textContent='仍要合并';
-      $('warn').textContent=`这段码是 ${fmtAge(d.t)}生成的，比这台的进度旧。合并不会删东西，但可能没有新内容。再点一次继续。`;
-      return;
-    }
+$('conn').onclick = async () => {
+  const repo=$('repo').value.trim().replace(/^https?:\/\/github\.com\//,'').replace(/\.git$/,'').replace(/\/$/,'');
+  const tok=$('tok').value.trim();
+  if(!repo.includes('/')){ $('warn').textContent='仓库要写成 用户名/仓库名'; return; }
+  if(!tok){ $('warn').textContent='把令牌粘进来'; return; }
+  $('conn').textContent='连接中…'; $('warn').textContent='';
+  const old=cfg; cfg={repo,token:tok};
+  try{
+    merge(await pull());
+    await put();
+    localStorage.setItem(SK, JSON.stringify(cfg));
+    setState('ok'); showPanel(); toast('已连上，以后自动同步');
+    $('sheet').classList.remove('on');
+  }catch(e){
+    cfg=old;
+    $('warn').textContent='连不上：'+e.message+'（检查令牌权限是否包含这个仓库的 Contents 读写）';
+    setState(localStorage.getItem(SK)?'err':'none');
   }
-  $('merge').dataset.ok=''; $('merge').textContent='合并';
-  const r=merge(d);
-  $('warn').textContent='';
-  $('sheet').classList.remove('on');
-  toast(r.touched||r.adv ? `已合并：${r.touched} 个词更新，${r.adv} 个复习计划推进`
-                         : '合并完成，这段码里没有新内容');
+  $('conn').textContent='连接';
+};
+$('now').onclick = async () => { $('warn2').textContent=''; $('now').textContent='同步中…'; await sync({loud:1}); $('now').textContent='立刻同步一次'; showPanel(); if(state==='ok') toast('同步完成'); };
+$('unlink').onclick = () => {
+  if($('unlink').dataset.ok!=='1'){ $('unlink').dataset.ok='1'; $('unlink').textContent='再点一次确认断开'; return; }
+  $('unlink').dataset.ok=''; $('unlink').textContent='断开这台设备';
+  cfg={}; sha=null; localStorage.removeItem(SK); setState('none'); showPanel(); toast('已断开，本地进度还在');
 };
 
 $('exp').onclick = () => {
@@ -581,6 +658,8 @@ document.addEventListener('keydown', e => {
 
 /* ---------- go ---------- */
 nextWord();
+setState(cfg.token ? 'pull' : 'none');
+if(cfg.token) sync();
 if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
 </body>
